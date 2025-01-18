@@ -82,7 +82,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         "animate-fade-in"
       )}
     >
-      <div className="flex items-center space-x-4 mb-6">
+      <div className="flex items-center space-x-4 mb-4">
         <div className="relative group">
           <div className="absolute inset-0 rounded-full bg-[#555555] opacity-0 group-hover:opacity-50 transition-opacity duration-300 blur-md" />
           <img
@@ -109,8 +109,8 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         <span>Anna's Wingman</span>
       </div>
 
-      <div className="flex flex-col h-[calc(100vh-450px)] md:h-auto">
-        <div className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent min-h-[200px] max-h-[300px] md:max-h-[400px]">
+      <div className="flex flex-col h-auto">
+        <div className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent min-h-[150px] max-h-[250px] md:max-h-[300px]">
           {profile.conversation.slice(0, visibleMessages).map((msg, index) => (
             <ChatBubble
               key={index}
@@ -131,7 +131,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         </div>
 
         {visibleMessages === profile.conversation.length && showAIRecommendation && (
-          <div className="mt-4 p-4 rounded-lg bg-secondary/10 animate-fade-in">
+          <div className="mt-3 p-3 rounded-lg bg-secondary/10 animate-fade-in">
             <h4 className="font-semibold mb-2">Your Wingman's Recommendation</h4>
             <div className={cn(
               "text-sm p-2 rounded",
@@ -143,7 +143,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         )}
 
         {visibleMessages === profile.conversation.length && (
-          <div className="flex items-center gap-2 mt-4 animate-fade-in">
+          <div className="flex items-center gap-2 mt-3 animate-fade-in">
             <Input
               placeholder="Ask their Wingman a question..."
               value={newMessage}
