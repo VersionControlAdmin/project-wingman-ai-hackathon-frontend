@@ -8,12 +8,14 @@ import { Meteors } from "@/components/ui/meteors";
 import { Button } from "@/components/ui/button";
 import { PhoneCall, X, Heart } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Swipe = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [profiles] = useState<Profile[]>(mockProfiles);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [shouldBuzz, setShouldBuzz] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -21,7 +23,21 @@ const Swipe = () => {
   useEffect(() => {
     // Don't buzz if coming from conversation page
     setShouldBuzz(location.state?.fromPage !== 'conversation');
+    
+    // Show welcome message for 3 seconds
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [location]);
+
+  useEffect(() => {
+    // Enable phone buzz when all profiles are swiped
+    if (currentIndex >= profiles.length) {
+      setShouldBuzz(true);
+    }
+  }, [currentIndex, profiles.length]);
 
   const handleSwipe = (liked: boolean) => {
     setDirection(liked ? "right" : "left");
@@ -68,6 +84,36 @@ const Swipe = () => {
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>
+        
+        <AnimatePresence>
+          {showWelcome && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute inset-0 flex items-center justify-center bg-primary/90 z-50"
+            >
+              <div className="text-center space-y-4 p-8 rounded-lg">
+                <motion.h2 
+                  className="text-3xl font-bold text-primary-foreground"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  Jason, your Wingman
+                </motion.h2>
+                <motion.p 
+                  className="text-xl text-muted-foreground"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  has conversed with {profiles.length} candidates and identified them for you
+                </motion.p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         
         <Button
           variant="ghost"
