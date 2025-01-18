@@ -19,8 +19,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
   const [visibleMessages, setVisibleMessages] = useState<number>(0);
   const [newMessage, setNewMessage] = useState("");
   const [imageOpen, setImageOpen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState(0);
+  const [userMessages, setUserMessages] = useState<Array<{text: string, sender: "user"}>>([]);
 
   useEffect(() => {
     if (isActive) {
@@ -38,43 +37,12 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
     }
   }, [profile.conversation.length, isActive]);
 
-  const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    setDragOffset(0);
-  };
-
-  const handleDrag = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging) {
-      const newOffset = e.movementX;
-      setDragOffset((prev) => {
-        const updated = prev + newOffset;
-        if (Math.abs(updated) > 200) {
-          if (updated > 0) {
-            onSwipeRight?.();
-          } else {
-            onSwipeLeft?.();
-          }
-          return 0;
-        }
-        return updated;
-      });
-    }
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    setDragOffset(0);
-  };
-
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      // In a real app, this would send the message to an API
-      console.log("Sending message:", newMessage);
+      setUserMessages(prev => [...prev, { text: newMessage, sender: "user" }]);
       setNewMessage("");
     }
   };
-
-  const dragProgress = Math.min(Math.abs(dragOffset) / 200, 1);
 
   return (
     <>
@@ -85,14 +53,11 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
           size="icon"
           className={cn(
             "absolute left-4 top-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
-            dragOffset < 0 ? `border-destructive bg-destructive/[${dragProgress}]` : "border-destructive/30",
+            "border-destructive/30 hover:border-destructive hover:bg-destructive/20"
           )}
           onClick={() => onSwipeLeft?.()}
         >
-          <X className={cn(
-            "h-8 w-8 transition-colors",
-            dragOffset < 0 ? "text-destructive-foreground" : "text-destructive"
-          )} />
+          <X className="h-8 w-8 text-destructive hover:text-destructive-foreground" />
         </Button>
 
         <Button
@@ -100,30 +65,20 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
           size="icon"
           className={cn(
             "absolute right-4 top-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
-            dragOffset > 0 ? `border-success bg-success/[${dragProgress}]` : "border-success/30",
+            "border-success/30 hover:border-success hover:bg-success/20"
           )}
           onClick={() => onSwipeRight?.()}
         >
-          <Heart className={cn(
-            "h-8 w-8 transition-colors",
-            dragOffset > 0 ? "text-success-foreground" : "text-success"
-          )} />
+          <Heart className="h-8 w-8 text-success hover:text-success-foreground" />
         </Button>
 
         {/* Card */}
         <Card 
           className={cn(
-            "w-full max-w-md mx-auto p-4 space-y-4 transition-all duration-300 cursor-grab active:cursor-grabbing bg-primary/10 backdrop-blur-sm",
-            !isActive && "opacity-50 blur-sm pointer-events-none scale-95",
-            isDragging && "scale-105"
+            "w-full max-w-md mx-auto p-4 space-y-4 transition-all duration-300 bg-white/90 backdrop-blur-sm",
+            !isActive && "opacity-50 blur-sm pointer-events-none scale-95 -translate-y-4",
+            "animate-fade-in"
           )}
-          style={{ 
-            transform: `translateX(${dragOffset}px) rotate(${dragOffset * 0.05}deg)`,
-          }}
-          onMouseDown={handleDragStart}
-          onMouseMove={handleDrag}
-          onMouseUp={handleDragEnd}
-          onMouseLeave={handleDragEnd}
         >
           <div className="flex items-center space-x-4 mb-6">
             <img
@@ -136,15 +91,15 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
               onClick={() => setImageOpen(true)}
             />
             <div>
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-lg font-semibold text-primary">
                 {profile.name}, {profile.age} • {profile.city}
               </h3>
-              <p className="text-sm text-gray-500">{profile.bio}</p>
+              <p className="text-sm text-muted">{profile.bio}</p>
             </div>
           </div>
 
           <div className="text-xs text-muted-foreground mb-2 flex justify-between">
-            <span>Anna's Wingman</span>
+            <span>Your Wingman</span>
             <span>{profile.name}'s Wingman</span>
           </div>
 
@@ -154,6 +109,14 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
                 key={index}
                 message={msg.text}
                 isUser={msg.sender === "user"}
+                className="animate-fade-in"
+              />
+            ))}
+            {userMessages.map((msg, index) => (
+              <ChatBubble
+                key={`user-${index}`}
+                message={msg.text}
+                isUser={true}
                 className="animate-fade-in"
               />
             ))}
@@ -174,7 +137,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
           {visibleMessages === profile.conversation.length && (
             <div className="flex items-center gap-2 mt-4 animate-fade-in">
               <Input
-                placeholder="Ask their Wingman a question..."
+                placeholder="Ask their Wingman a question... Press Enter to send"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}

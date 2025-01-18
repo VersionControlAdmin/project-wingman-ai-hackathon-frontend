@@ -45,7 +45,7 @@ export default {
           foreground: "#FFFFFF",
         },
         success: {
-          DEFAULT: "#f0ffce",
+          DEFAULT: "#81b800",
           foreground: "#191923",
         },
         popover: {
