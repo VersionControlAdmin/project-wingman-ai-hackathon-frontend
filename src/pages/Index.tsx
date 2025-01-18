@@ -5,24 +5,32 @@ import { MessageSquare } from "lucide-react";
 import { mockProfiles } from "@/data/mockProfiles";
 import { MagnetizeButton } from "@/components/ui/magnetize-button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { useState, useEffect } from "react";
-
-const taglines = [
-  "Find friends & love—grounded in shared experiences.",
-  "Find friends & love—shaped by your story.",
-  "Find friends & love—powered by AI."
-];
+import { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [currentTagline, setCurrentTagline] = useState(0);
+  const [titleNumber, setTitleNumber] = useState(0);
+  
+  const titles = useMemo(
+    () => [
+      "grounded in shared experiences",
+      "shaped by your story",
+      "powered by AI"
+    ],
+    []
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTagline((prev) => (prev + 1) % taglines.length);
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === titles.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
     }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, titles]);
 
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
@@ -35,8 +43,31 @@ const Index = () => {
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
-              <h1 className="text-4xl md:text-6xl font-bold text-white relative z-10 min-h-[120px]">
-                {taglines[currentTagline]}
+              <h1 className="text-4xl md:text-6xl font-bold text-white relative z-10">
+                Find friends & love—
+                <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 min-h-[60px]">
+                  {titles.map((title, index) => (
+                    <motion.span
+                      key={index}
+                      className="absolute"
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={
+                        titleNumber === index
+                          ? {
+                              y: 0,
+                              opacity: 1,
+                            }
+                          : {
+                              y: titleNumber > index ? -50 : 50,
+                              opacity: 0,
+                            }
+                      }
+                      transition={{ type: "spring", stiffness: 50 }}
+                    >
+                      {title}
+                    </motion.span>
+                  ))}
+                </span>
               </h1>
             </div>
             
@@ -47,9 +78,9 @@ const Index = () => {
             <div className="pt-8">
               <MagnetizeButton
                 onClick={() => navigate("/conversation")}
-                className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg"
+                className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg flex items-center gap-2"
               >
-                <MessageSquare className="mr-2 h-5 w-5" />
+                <MessageSquare className="h-5 w-5" />
                 Start talking to Jason, your personal Wingman
               </MagnetizeButton>
             </div>

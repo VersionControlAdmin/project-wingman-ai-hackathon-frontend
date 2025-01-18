@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { AuroraBackground } from "./aurora-background";
 
 export interface MagnetizeButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -36,12 +37,15 @@ export const MagnetizeButton = React.forwardRef<
         transition: "transform 0.2s ease-out",
       }}
       className={cn(
-        "relative inline-flex items-center justify-center transition-all duration-200",
+        "relative inline-flex items-center justify-center transition-all duration-200 overflow-hidden",
         className
       )}
       {...props}
     >
-      {children}
+      <div className="absolute inset-0 opacity-30">
+        <AuroraBackground />
+      </div>
+      <span className="relative z-10">{children}</span>
     </button>
   );
 });
