@@ -5,6 +5,7 @@ import { MessageSquare } from "lucide-react";
 import { mockProfiles } from "@/data/mockProfiles";
 import { MagnetizeButton } from "@/components/ui/magnetize-button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
+import { Sparkles } from "@/components/ui/sparkles";
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -34,7 +35,7 @@ const Index = () => {
       <main className="flex-1 relative">
         <AuroraBackground className="absolute inset-0" />
         
-        <div className="container mx-auto px-4 py-12 md:py-20 relative">
+        <div className="container mx-auto px-4 py-12 relative">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
@@ -64,7 +65,7 @@ const Index = () => {
             </div>
             
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-              Find friends and love based on your unique character
+              Find friends and love based on unique character with <Sparkles>Wingly</Sparkles>
             </p>
             
             <div className="flex justify-center pt-8">
