@@ -44,14 +44,14 @@ const Swipe = () => {
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="relative w-full max-w-4xl">
           {/* Stack of future cards */}
-          {profiles.slice(currentIndex + 1, currentIndex + 3).map((profile, idx) => (
+          {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
             <div
               key={profile.id}
-              className="absolute left-1/2 -translate-x-1/2 top-[40%]"
+              className="absolute left-1/2 top-[40%]"
               style={{
-                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05}) translateY(-${(idx + 1) * 20}px)`,
+                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05}) translate(${idx * 10}px, ${idx * 10}px)`,
                 zIndex: -idx,
-                opacity: 0.5 - idx * 0.2,
+                opacity: 0.5 - idx * 0.1,
               }}
             >
               <MatchCard profile={profile} isActive={false} />

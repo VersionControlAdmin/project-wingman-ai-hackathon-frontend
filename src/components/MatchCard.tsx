@@ -21,7 +21,12 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
   const [imageOpen, setImageOpen] = useState(false);
   const [userMessages, setUserMessages] = useState<Array<{text: string, sender: "user"}>>([]);
 
+  // Reset animation and messages when card changes or becomes active
   useEffect(() => {
+    setVisibleMessages(0);
+    setNewMessage("");
+    setUserMessages([]);
+    
     if (isActive) {
       const timer = setInterval(() => {
         setVisibleMessages((prev) => {
@@ -35,7 +40,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
 
       return () => clearInterval(timer);
     }
-  }, [profile.conversation.length, isActive]);
+  }, [profile.id, isActive]); // Add profile.id to dependencies to reset on card change
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -95,9 +100,9 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
           </div>
         </div>
 
-        <div className="text-xs text-muted-foreground mb-2 flex justify-between">
-          <span>Your Wingman</span>
-          <span>{profile.name}'s Wingman</span>
+        <div className="text-xs text-primary mb-2 flex justify-between font-medium">
+          <span>Anna's Wingman</span>
+          <span>Candidate's Wingman</span>
         </div>
 
         <div className="space-y-2">
@@ -138,7 +143,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              className="placeholder:text-black"
+              className="placeholder:text-gray-500"
             />
             <Button size="icon" onClick={handleSendMessage}>
               <Send className="h-4 w-4" />
