@@ -1,53 +1,105 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { AuroraBackground } from "./aurora-background";
+"use client"
 
-export interface MagnetizeButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+import * as React from "react"
+import { cn } from "@/lib/utils"
+import { motion, useAnimation } from "framer-motion"
+import { Magnet } from "lucide-react"
+import { useEffect, useState, useCallback } from "react"
+import { Button } from "@/components/ui/button"
+
+interface MagnetizeButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    particleCount?: number;
+    attractRadius?: number;
 }
 
-export const MagnetizeButton = React.forwardRef<
-  HTMLButtonElement,
-  MagnetizeButtonProps
->(({ className, children, ...props }, ref) => {
-  const [position, setPosition] = React.useState({ x: 0, y: 0 });
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
+interface Particle {
+    id: number;
+    x: number;
+    y: number;
+}
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!buttonRef.current) return;
+function MagnetizeButton({
+    className,
+    particleCount = 12,
+    attractRadius = 50,
+    children,
+    ...props
+}: MagnetizeButtonProps) {
+    const [isAttracting, setIsAttracting] = useState(false);
+    const [particles, setParticles] = useState<Particle[]>([]);
+    const particlesControl = useAnimation();
 
-    const bounds = buttonRef.current.getBoundingClientRect();
-    const x = e.clientX - bounds.left - bounds.width / 2;
-    const y = e.clientY - bounds.top - bounds.height / 2;
-    setPosition({ x, y });
-  };
+    useEffect(() => {
+        const newParticles = Array.from({ length: particleCount }, (_, i) => ({
+            id: i,
+            x: Math.random() * 360 - 180,
+            y: Math.random() * 360 - 180,
+        }));
+        setParticles(newParticles);
+    }, [particleCount]);
 
-  const handlePointerLeave = () => {
-    setPosition({ x: 0, y: 0 });
-  };
+    const handleInteractionStart = useCallback(async () => {
+        setIsAttracting(true);
+        await particlesControl.start({
+            x: 0,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 50,
+                damping: 10,
+            },
+        });
+    }, [particlesControl]);
 
-  return (
-    <button
-      ref={buttonRef}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      style={{
-        transform: `translate(${position.x * 0.1}px, ${position.y * 0.1}px)`,
-        transition: "transform 0.2s ease-out",
-      }}
-      className={cn(
-        "relative inline-flex items-center justify-center transition-all duration-200 overflow-hidden",
-        className
-      )}
-      {...props}
-    >
-      <div className="absolute inset-0 opacity-30">
-        <AuroraBackground />
-      </div>
-      <span className="relative z-10">{children}</span>
-    </button>
-  );
-});
+    const handleInteractionEnd = useCallback(async () => {
+        setIsAttracting(false);
+        await particlesControl.start((i) => ({
+            x: particles[i].x,
+            y: particles[i].y,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+            },
+        }));
+    }, [particlesControl, particles]);
 
-MagnetizeButton.displayName = "MagnetizeButton";
+    return (
+        <Button
+            className={cn(
+                "min-w-40 relative touch-none",
+                "bg-accent dark:bg-accent",
+                "hover:bg-accent/90 dark:hover:bg-accent/90",
+                "text-accent-foreground dark:text-accent-foreground",
+                "border border-accent/30 dark:border-accent/30",
+                "transition-all duration-300",
+                className
+            )}
+            onMouseEnter={handleInteractionStart}
+            onMouseLeave={handleInteractionEnd}
+            onTouchStart={handleInteractionStart}
+            onTouchEnd={handleInteractionEnd}
+            {...props}
+        >
+            {particles.map((_, index) => (
+                <motion.div
+                    key={index}
+                    custom={index}
+                    initial={{ x: particles[index].x, y: particles[index].y }}
+                    animate={particlesControl}
+                    className={cn(
+                        "absolute w-1.5 h-1.5 rounded-full",
+                        "bg-accent-foreground/50 dark:bg-accent-foreground/50",
+                        "transition-opacity duration-300",
+                        isAttracting ? "opacity-100" : "opacity-40"
+                    )}
+                />
+            ))}
+            <span className="relative w-full flex items-center justify-center gap-2">
+                {children}
+            </span>
+        </Button>
+    );
+}
+
+export { MagnetizeButton }

@@ -107,6 +107,14 @@ export default {
             opacity: "0",
           },
         },
+        aurora: {
+          from: {
+            backgroundPosition: "50% 50%, 50% 50%",
+          },
+          to: {
+            backgroundPosition: "350% 50%, 350% 50%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -118,6 +126,7 @@ export default {
         "slide-left": "slide-left 0.3s ease-out",
         "slide-right": "slide-right 0.3s ease-out",
         "meteor-effect": "meteor 5s linear infinite",
+        aurora: "aurora 60s linear infinite",
       },
     },
   },

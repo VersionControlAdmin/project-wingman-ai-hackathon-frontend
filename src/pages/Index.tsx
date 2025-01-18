@@ -37,7 +37,7 @@ const Index = () => {
       <Header />
       
       <main className="flex-1 relative">
-        <AuroraBackground className="absolute inset-0 opacity-20" />
+        <AuroraBackground className="absolute inset-0" />
         
         <section className="container mx-auto px-4 py-20 md:py-32 relative">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
@@ -75,10 +75,10 @@ const Index = () => {
               Find friends and love based on your unique character
             </p>
             
-            <div className="pt-8">
+            <div className="flex justify-center pt-8">
               <MagnetizeButton
                 onClick={() => navigate("/conversation")}
-                className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg flex items-center gap-2"
+                className="px-8 py-4"
               >
                 <MessageSquare className="h-5 w-5" />
                 Start talking to Jason, your personal Wingman
