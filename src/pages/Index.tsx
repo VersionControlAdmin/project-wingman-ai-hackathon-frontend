@@ -1,29 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { MessageSquare, Brain, Users, Sparkles } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { mockProfiles } from "@/data/mockProfiles";
 import { MagnetizeButton } from "@/components/ui/magnetize-button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const FeatureCard = ({ icon: Icon, title, description }: { icon: any, title: string, description: string }) => {
-  return (
-    <div className="group relative overflow-hidden rounded-xl bg-white/50 backdrop-blur-sm p-8 hover:bg-white/60 transition-colors">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 transform scale-[0.80] rounded-full blur-3xl" />
-      <div className="relative z-10">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-          <Icon className="h-6 w-6 text-primary" />
-        </div>
-        <h3 className="text-xl font-semibold text-primary mb-2">{title}</h3>
-        <p className="text-muted text-sm">{description}</p>
-      </div>
-      <div className="absolute inset-0 border border-primary/10 rounded-xl" />
-    </div>
-  );
-};
 
 const Index = () => {
   const navigate = useNavigate();
@@ -40,19 +24,13 @@ const Index = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (titleNumber === titles.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
+      setTitleNumber((prev) => (prev === titles.length - 1 ? 0 : prev + 1));
     }, 3000);
     return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
+  }, [titleNumber, titles.length]);
 
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
-      <Header />
-      
       <main className="flex-1 relative">
         <AuroraBackground className="absolute inset-0" />
         
@@ -62,7 +40,7 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
               <h1 className="text-4xl md:text-6xl font-bold text-white relative z-10">
                 Find friends & love—
-                <div className="h-[80px] md:h-[100px] relative flex justify-center items-center overflow-hidden">
+                <div className="h-[120px] md:h-[140px] relative flex justify-center items-center overflow-hidden">
                   {titles.map((title, index) => (
                     <motion.span
                       key={index}
@@ -121,24 +99,6 @@ const Index = () => {
               <span className="text-muted-foreground ml-2">
                 Join Marie, Luna & 1000+ others from Berlin already using the platform
               </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-              <FeatureCard
-                icon={Brain}
-                title="AI-Powered Matching"
-                description="Intelligent algorithms that understand your personality"
-              />
-              <FeatureCard
-                icon={MessageSquare}
-                title="Natural Conversations"
-                description="Talk naturally with your AI wingman Jason"
-              />
-              <FeatureCard
-                icon={Users}
-                title="Quality Matches"
-                description="Connect with people who truly match your character"
-              />
             </div>
           </div>
         </section>
