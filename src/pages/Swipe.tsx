@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Meteors } from "@/components/ui/meteors";
 import { Button } from "@/components/ui/button";
 import { PhoneCall, X, Heart } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Swipe = () => {
@@ -17,18 +17,19 @@ const Swipe = () => {
   const [shouldBuzz, setShouldBuzz] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [isCardMoving, setIsCardMoving] = useState(false);
+  const [showCards, setShowCards] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     setShouldBuzz(location.state?.fromPage !== 'conversation');
     
-    const timer = setTimeout(() => {
+    const welcomeTimer = setTimeout(() => {
       setShowWelcome(false);
-    }, 4000); // Changed from 3000 to 4000
+      setShowCards(true);
+    }, 4000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(welcomeTimer);
   }, [location]);
 
   useEffect(() => {
@@ -52,8 +53,7 @@ const Swipe = () => {
 
   const handleCallClick = () => {
     navigate('/conversation', { state: { fromPage: 'swipe' } });
-    toast({
-      title: "Starting call...",
+    toast("Starting call...", {
       description: "Connecting to the other person",
     });
   };
@@ -130,7 +130,7 @@ const Swipe = () => {
         
         <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative">
           <AnimatePresence mode="wait">
-            {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
+            {showCards && profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
               <motion.div
                 key={profile.id}
                 initial={{ scale: 0.95 - (idx + 1) * 0.05, y: 0 }}
@@ -153,26 +153,28 @@ const Swipe = () => {
               </motion.div>
             ))}
 
-            <motion.div 
-              key={profiles[currentIndex].id}
-              initial={{ scale: 1, x: direction === "left" ? -100 : direction === "right" ? 100 : 0 }}
-              animate={{ 
-                scale: 1,
-                x: direction ? (direction === "left" ? -1000 : 1000) : 0,
-                opacity: direction ? 0 : 1,
-                rotate: direction ? (direction === "left" ? -10 : 10) : 0
-              }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut"
-              }}
-              className="relative z-10 w-full"
-            >
-              <MatchCard 
-                profile={profiles[currentIndex]} 
-                isActive={!isCardMoving}
-              />
-            </motion.div>
+            {showCards && currentIndex < profiles.length && (
+              <motion.div 
+                key={profiles[currentIndex].id}
+                initial={{ scale: 1, x: direction === "left" ? -100 : direction === "right" ? 100 : 0 }}
+                animate={{ 
+                  scale: 1,
+                  x: direction ? (direction === "left" ? -1000 : 1000) : 0,
+                  opacity: direction ? 0 : 1,
+                  rotate: direction ? (direction === "left" ? -10 : 10) : 0
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+                className="relative z-10 w-full"
+              >
+                <MatchCard 
+                  profile={profiles[currentIndex]} 
+                  isActive={!isCardMoving}
+                />
+              </motion.div>
+            )}
           </AnimatePresence>
 
           <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50 bg-primary/80 py-4 md:py-0 md:bg-transparent">
