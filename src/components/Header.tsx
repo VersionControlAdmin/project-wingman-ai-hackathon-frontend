@@ -117,7 +117,7 @@ export const Header = () => {
                   <li key={item.href}>
                     <Link
                       to={item.href}
-                      className="block p-3 text-white hover:text-accent hover:bg-primary/5 rounded-md transition-colors duration-200"
+                      className="block p-3 text-black hover:text-accent hover:bg-primary/5 rounded-md transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.title}
@@ -127,7 +127,7 @@ export const Header = () => {
                 <li className="pt-2 border-t border-primary/10">
                   {isLoggedIn ? (
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 p-3 text-white">
+                      <div className="flex items-center gap-2 p-3 text-black">
                         <User className="h-4 w-4" />
                         <span className="text-sm">My Profile: Anna</span>
                       </div>
@@ -135,7 +135,7 @@ export const Header = () => {
                         variant="ghost"
                         size="sm"
                         onClick={handleLoginClick}
-                        className="w-full text-white hover:text-accent hover:bg-primary/5"
+                        className="w-full text-black hover:text-accent hover:bg-primary/5"
                       >
                         <LogOut className="h-4 w-4 mr-2" />
                         Logout
@@ -146,7 +146,7 @@ export const Header = () => {
                       variant="ghost"
                       size="sm"
                       onClick={handleLoginClick}
-                      className="w-full text-white hover:text-accent hover:bg-primary/5"
+                      className="w-full text-black hover:text-accent hover:bg-primary/5"
                     >
                       Login
                     </Button>

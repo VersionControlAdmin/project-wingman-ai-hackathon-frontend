@@ -34,8 +34,8 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
       <div className="container mx-auto px-4 py-8">
         <AuroraBackground className="absolute inset-0" />
-        <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
-          <div className="relative md:pt-32 sm:pt-4">
+        <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in md:pt-4 pt-32">
+          <div className="relative md:pt-32">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
             <h1 className="text-4xl md:text-6xl font-bold text-white relative z-10">
               Find friends & love—
