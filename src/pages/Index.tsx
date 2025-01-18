@@ -34,7 +34,7 @@ const Index = () => {
       <main className="flex-1 relative">
         <AuroraBackground className="absolute inset-0" />
         
-        <section className="container mx-auto px-4 py-20 md:py-32 relative">
+        <div className="container mx-auto px-4 py-20 md:py-32 relative">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
@@ -77,30 +77,31 @@ const Index = () => {
               </MagnetizeButton>
             </div>
 
-          <div className="flex items-center justify-start gap-2 mt-8">
-            <div className="flex -space-x-2">
-              {mockProfiles.slice(0, 3).map((profile) => (
-                <div
-                  key={profile.id}
-                  className="relative group"
-                >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300" />
-                  <img
-                    src={profile.avatar}
-                    alt={profile.name}
-                    className="relative w-12 h-12 rounded-full border-2 border-white object-cover aspect-square"
-                  />
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 px-2 py-1 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                    {profile.name}
+            <div className="flex items-center justify-start gap-2">
+              <div className="flex -space-x-2">
+                {mockProfiles.slice(0, 3).map((profile) => (
+                  <div
+                    key={profile.id}
+                    className="relative group"
+                  >
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300" />
+                    <img
+                      src={profile.avatar}
+                      alt={profile.name}
+                      className="relative w-12 h-12 rounded-full border-2 border-white object-cover aspect-square"
+                    />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 px-2 py-1 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                      {profile.name}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <span className="text-muted-foreground text-left">
+                Join Marie, Luna & 1000+ others from Berlin already using the platform
+              </span>
             </div>
-            <span className="text-muted-foreground text-left">
-              Join Marie, Luna & 1000+ others from Berlin already using the platform
-            </span>
           </div>
-        </section>
+        </div>
       </main>
 
       <Footer />
