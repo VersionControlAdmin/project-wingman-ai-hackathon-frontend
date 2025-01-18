@@ -1,71 +1,74 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MicrophoneButton } from "@/components/MicrophoneButton";
+import { PhoneOff } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Header } from "@/components/Header";
 import { Meteors } from "@/components/ui/meteors";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const Conversation = () => {
-  const location = useLocation();
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [isRecording, setIsRecording] = useState(false);
+  const navigate = useNavigate();
+  const [showEndCall, setShowEndCall] = useState(false);
 
   useEffect(() => {
-    // Fetch messages based on conversation ID from location
-    const fetchMessages = async () => {
-      // Simulate fetching messages
-      const fetchedMessages = [
-        { id: 1, text: "Hello!", sender: "user" },
-        { id: 2, text: "Hi there!", sender: "friend" },
-      ];
-      setMessages(fetchedMessages);
-    };
+    const timer = setTimeout(() => {
+      setShowEndCall(true);
+    }, 2000);
 
-    fetchMessages();
-  }, [location]);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      setMessages((prev) => [...prev, { id: Date.now(), text: newMessage, sender: "user" }]);
-      setNewMessage("");
-    }
-  };
-
-  const handleMicrophoneClick = () => {
-    setIsRecording(!isRecording);
-    // Add your recording logic here
-    console.log("Microphone clicked, recording:", !isRecording);
+  const handleEndCall = () => {
+    navigate('/swipe', { state: { fromPage: 'conversation' } });
+    toast("Call has ended", {
+      description: "You can now continue swiping",
+      duration: 2000,
+    });
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-primary">
-      <div className="flex-1 relative">
+    <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
+      <Header />
+      <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
-          <Meteors />
+          <Meteors number={20} />
         </div>
-        <div className="relative z-10 h-full flex flex-col">
-          <div className="flex-1 overflow-y-auto p-4">
-            {messages.map((message) => (
-              <div key={message.id} className={`message ${message.sender}`}>
-                {message.text}
-              </div>
-            ))}
-          </div>
-          <div className="flex p-4">
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              className="flex-1 border rounded p-2"
-              placeholder="Type a message..."
-            />
-            <Button onClick={handleSendMessage} className="ml-2">Send</Button>
-            <MicrophoneButton 
-              isRecording={isRecording}
-              onClick={handleMicrophoneClick}
-              className="ml-2"
-            />
-          </div>
+
+        <div className="text-center space-y-8 relative z-10">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl font-semibold text-primary-foreground"
+          >
+            Connecting...
+          </motion.h2>
+
+          {showEndCall && (
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 260,
+                damping: 20 
+              }}
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "w-14 h-14 rounded-full animate-fade-in",
+                  "bg-destructive hover:bg-destructive/80"
+                )}
+                onClick={handleEndCall}
+              >
+                <PhoneOff className="h-6 w-6 text-white" />
+              </Button>
+            </motion.div>
+          )}
         </div>
       </div>
     </div>

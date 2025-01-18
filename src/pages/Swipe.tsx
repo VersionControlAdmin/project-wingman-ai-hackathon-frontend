@@ -60,30 +60,29 @@ const Swipe = () => {
 
   if (currentIndex >= profiles.length) {
     return (
-      <div className="h-screen flex flex-col bg-primary">
+      <div className="min-h-screen flex flex-col bg-primary overflow-hidden relative">
         <Header />
-        <div className="flex-1 flex items-center justify-center relative">
-          <div className="absolute inset-0">
-            <Meteors />
-          </div>
-          <div className="text-center space-y-4 animate-fade-in relative z-10">
-            <h2 className="text-2xl font-semibold text-white">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <div className="text-center space-y-4 animate-fade-in">
+            <h2 className="text-2xl font-semibold text-primary-foreground">
               That's it for now!
             </h2>
-            <p className="text-white">
+            <p className="text-muted">
               We'll notify you when new matches are available.
             </p>
           </div>
         </div>
+        <Meteors />
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-primary">
-      <div className="flex-1 relative">
+    <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0 w-full">
+      <Header />
+      <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
-          <Meteors />
+          <Meteors number={20} />
         </div>
         
         <AnimatePresence>
@@ -96,7 +95,7 @@ const Swipe = () => {
             >
               <div className="text-center space-y-4 p-8 rounded-lg">
                 <motion.h2 
-                  className="text-3xl font-bold text-white"
+                  className="text-3xl font-bold text-primary-foreground"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -104,7 +103,7 @@ const Swipe = () => {
                   Jason, your Wingman
                 </motion.h2>
                 <motion.p 
-                  className="text-xl text-white"
+                  className="text-xl text-muted-foreground"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
@@ -129,8 +128,8 @@ const Swipe = () => {
           <PhoneCall className="h-6 w-6 text-white" />
         </Button>
         
-        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative h-full overflow-y-auto">
-          <AnimatePresence mode="popLayout">
+        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative">
+          <AnimatePresence mode="wait">
             {showCards && profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
               <motion.div
                 key={profile.id}
