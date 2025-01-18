@@ -34,7 +34,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
     }
   }, [visibleMessages, userMessages]);
 
-  // Reset animation and messages when card changes or becomes active
+  // Show more messages initially on mobile
   useEffect(() => {
     setVisibleMessages(0);
     setNewMessage("");
@@ -45,11 +45,10 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
     if (isActive) {
       const timer = setInterval(() => {
         setVisibleMessages((prev) => {
-          if (prev < profile.conversation.length) {
+          if (prev < (window.innerWidth < 768 ? Math.min(4, profile.conversation.length) : profile.conversation.length)) {
             return prev + 1;
           }
           clearInterval(timer);
-          // Start profile picture reveal timer after conversation ends
           setTimeout(() => {
             setShowProfilePicture(true);
             setTimeout(() => setProfilePictureBuzz(true), 500);
@@ -75,24 +74,24 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
         variant="ghost"
         size="icon"
         className={cn(
-          "absolute left-8 bottom-4 md:left-4 md:top-1/2 md:-translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
+          "absolute left-8 bottom-4 md:left-4 md:top-1/2 md:-translate-y-1/2 z-10 w-14 h-14 rounded-full border-2 transition-all duration-300",
           "border-destructive/30 hover:border-destructive hover:bg-destructive/20"
         )}
         onClick={() => onSwipeLeft?.()}
       >
-        <X className="h-8 w-8 text-destructive hover:text-destructive-foreground" />
+        <X className="h-6 w-6 text-destructive hover:text-destructive-foreground" />
       </Button>
 
       <Button
         variant="ghost"
         size="icon"
         className={cn(
-          "absolute right-8 bottom-4 md:right-4 md:top-1/2 md:-translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
+          "absolute right-8 bottom-4 md:right-4 md:top-1/2 md:-translate-y-1/2 z-10 w-14 h-14 rounded-full border-2 transition-all duration-300",
           "border-success/30 hover:border-success hover:bg-success/20"
         )}
         onClick={() => onSwipeRight?.()}
       >
-        <Heart className="h-8 w-8 text-success hover:text-success-foreground" />
+        <Heart className="h-6 w-6 text-success hover:text-success-foreground" />
       </Button>
 
       <Card 

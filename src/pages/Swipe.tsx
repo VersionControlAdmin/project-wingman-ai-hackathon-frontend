@@ -64,7 +64,7 @@ const Swipe = () => {
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0">
       <Header />
-      <div className="flex-1 flex items-center justify-center relative px-4 py-6 md:p-4">
+      <div className="flex-1 flex items-center justify-center relative px-4 py-8 md:p-4">
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>
@@ -73,7 +73,7 @@ const Swipe = () => {
           variant="ghost"
           size="icon"
           className={cn(
-            "fixed right-4 top-20 z-50 w-12 h-12 rounded-full",
+            "fixed right-4 top-20 z-50 w-14 h-14 rounded-full",
             "bg-accent hover:bg-accent/80",
             shouldBuzz && "animate-buzz"
           )}
@@ -82,7 +82,7 @@ const Swipe = () => {
           <PhoneCall className="h-6 w-6 text-white" />
         </Button>
         
-        <div className="relative w-full max-w-md mx-auto mt-16 mb-8 md:mt-0">
+        <div className="relative w-full max-w-md mx-auto mt-20 mb-8 md:mt-0">
           {/* Stack of future cards */}
           {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
             <div
