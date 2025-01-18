@@ -24,29 +24,47 @@ const Conversation = () => {
       localWavesurfer.current = WaveSurfer.create({
         container: localWaveformRef.current,
         waveColor: '#fb4d3d', // accent color
-        progressColor: '#191923', // primary color
-        height: 200, // Increased height
+        progressColor: '#fb4d3d', // accent color
+        height: 200,
         cursorWidth: 0,
         barWidth: 3,
         barGap: 4,
-        barRadius: 3
+        barRadius: 3,
+        normalize: true,
+        minPxPerSec: 50
       });
 
       // Initialize remote waveform
       remoteWavesurfer.current = WaveSurfer.create({
         container: remoteWaveformRef.current,
         waveColor: '#c5d1eb', // secondary color
-        progressColor: '#191923', // primary color
-        height: 200, // Increased height
+        progressColor: '#c5d1eb', // secondary color
+        height: 200,
         cursorWidth: 0,
         barWidth: 3,
         barGap: 4,
-        barRadius: 3
+        barRadius: 3,
+        normalize: true,
+        minPxPerSec: 50
       });
 
-      // Load demo audio data
-      localWavesurfer.current.load('/demo-audio.mp3');
-      remoteWavesurfer.current.load('/demo-audio.mp3');
+      // Load demo audio data with error handling
+      const loadAudio = async () => {
+        try {
+          await localWavesurfer.current?.load('/demo-audio.mp3');
+          await remoteWavesurfer.current?.load('/demo-audio.mp3');
+          console.log('Audio loaded successfully');
+        } catch (error) {
+          console.error('Error loading audio:', error);
+          toast({
+            title: "Error loading audio",
+            description: "Please check if the audio file exists",
+            variant: "destructive",
+          });
+        }
+      };
+
+      loadAudio();
     }
 
     return () => {
@@ -125,12 +143,12 @@ const Conversation = () => {
       <div className="w-full max-w-4xl flex-1 flex flex-col justify-center gap-16 px-4">
         {/* Remote audio waveform (AI) */}
         <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm w-full">
-          <div ref={remoteWaveformRef} className="w-full" />
+          <div ref={remoteWaveformRef} className="w-full h-[200px]" />
         </div>
         
         {/* Local audio waveform (User) */}
         <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm w-full">
-          <div ref={localWaveformRef} className="w-full" />
+          <div ref={localWaveformRef} className="w-full h-[200px]" />
         </div>
       </div>
 
