@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Profile } from "@/data/mockProfiles";
 import { ChatBubble } from "./ChatBubble";
 import { Card } from "@/components/ui/card";
@@ -22,6 +22,17 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
   const [userMessages, setUserMessages] = useState<Array<{text: string, sender: "user"}>>([]);
   const [showProfilePicture, setShowProfilePicture] = useState(false);
   const [profilePictureBuzz, setProfilePictureBuzz] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (visibleMessages > 0) {
+      scrollToBottom();
+    }
+  }, [visibleMessages, userMessages]);
 
   // Reset animation and messages when card changes or becomes active
   useEffect(() => {
@@ -135,6 +146,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
               className="animate-fade-in"
             />
           ))}
+          <div ref={messagesEndRef} />
         </div>
 
         {visibleMessages === profile.conversation.length && (
@@ -165,12 +177,12 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
         )}
       </Card>
       <Dialog open={imageOpen} onOpenChange={setImageOpen}>
-        <DialogContent className="max-w-2xl">
-          <div className="relative">
+        <DialogContent className="max-w-[90vw] max-h-[90vh] w-auto">
+          <div className="relative w-full h-full">
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-2 right-2"
+              className="absolute top-2 right-2 z-10"
               onClick={() => setImageOpen(false)}
             >
               <X className="h-4 w-4" />
@@ -178,7 +190,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
             <img
               src={profile.avatar}
               alt={profile.name}
-              className="w-full h-auto rounded-lg"
+              className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
             />
           </div>
         </DialogContent>

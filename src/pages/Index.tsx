@@ -1,45 +1,57 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MessageSquare } from "lucide-react";
-import { Meteors } from "@/components/ui/meteors";
 import { mockProfiles } from "@/data/mockProfiles";
+import { MagnetizeButton } from "@/components/ui/magnetize-button";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { useState, useEffect } from "react";
+
+const taglines = [
+  "Find friends & love—grounded in shared experiences.",
+  "Find friends & love—shaped by your story.",
+  "Find friends & love—powered by AI."
+];
 
 const Index = () => {
   const navigate = useNavigate();
+  const [currentTagline, setCurrentTagline] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTagline((prev) => (prev + 1) % taglines.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-secondary/30 to-white overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
       <Header />
       
       <main className="flex-1 relative">
-        <div className="absolute inset-0 pointer-events-none">
-          <Meteors number={20} />
-        </div>
+        <AuroraBackground className="absolute inset-0 opacity-20" />
         
         <section className="container mx-auto px-4 py-20 md:py-32 relative">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
-              <h1 className="text-4xl md:text-6xl font-bold text-primary relative z-10">
-                Find Your Perfect Match with AI
+              <h1 className="text-4xl md:text-6xl font-bold text-white relative z-10 min-h-[120px]">
+                {taglines[currentTagline]}
               </h1>
             </div>
             
-            <p className="text-xl md:text-2xl text-muted max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               Find friends and love based on your unique character
             </p>
             
             <div className="pt-8">
-              <Button
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-white"
+              <MagnetizeButton
                 onClick={() => navigate("/conversation")}
+                className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg"
               >
                 <MessageSquare className="mr-2 h-5 w-5" />
                 Start talking to Jason, your personal Wingman
-              </Button>
+              </MagnetizeButton>
             </div>
 
             <div className="pt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -56,12 +68,8 @@ const Index = () => {
                 <p className="text-muted text-sm">Connect with people who truly match your character</p>
               </div>
             </div>
-          </div>
-        </section>
 
-        <section className="container mx-auto px-4 pb-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-2">
+            <div className="pt-12 flex items-center justify-center gap-2">
               <div className="flex -space-x-4">
                 {mockProfiles.slice(0, 3).map((profile) => (
                   <div
@@ -80,7 +88,7 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <span className="text-muted ml-2">
+              <span className="text-muted-foreground ml-2">
                 Join Marie, Luna & 1000+ others from Berlin already using the platform
               </span>
             </div>
