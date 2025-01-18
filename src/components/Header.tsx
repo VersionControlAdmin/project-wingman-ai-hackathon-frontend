@@ -26,21 +26,21 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-primary/80 backdrop-blur-md border-b border-primary/20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-primary/5 supports-[backdrop-filter]:bg-primary/10 backdrop-blur-xl border-b border-primary/10">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div 
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => navigate("/")}
         >
           <img src="/placeholder.svg" alt="Logo" className="h-8 w-8" />
-          <span className="font-semibold text-secondary">Project Wingly</span>
+          <span className="font-semibold text-primary">Project Wingly</span>
         </div>
 
         {/* Mobile Menu Button */}
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden text-secondary hover:text-accent hover:bg-primary/40"
+          className="md:hidden text-primary hover:text-accent hover:bg-primary/10"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? (
@@ -55,16 +55,16 @@ export const Header = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-secondary hover:text-accent hover:bg-primary/40">
+                <NavigationMenuTrigger className="bg-transparent text-primary hover:text-accent hover:bg-primary/10">
                   Navigation
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[200px] gap-2 p-4 bg-primary text-secondary">
+                  <ul className="grid w-[200px] gap-2 p-4 bg-background/80 backdrop-blur-md text-primary">
                     {navigationItems.map((item) => (
                       <li key={item.href}>
                         <Link
                           to={item.href}
-                          className="block p-2 hover:bg-primary/40 hover:text-accent rounded-md transition-colors duration-200"
+                          className="block p-2 hover:bg-primary/5 hover:text-accent rounded-md transition-colors duration-200"
                         >
                           {item.title}
                         </Link>
@@ -79,14 +79,14 @@ export const Header = () => {
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-secondary" />
-                <span className="text-sm text-secondary">My Profile: Anna</span>
+                <User className="h-4 w-4 text-primary" />
+                <span className="text-sm text-primary">My Profile: Anna</span>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleLoginClick}
-                className="text-secondary hover:text-accent hover:bg-primary/40"
+                className="text-primary hover:text-accent hover:bg-primary/10"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
@@ -97,7 +97,7 @@ export const Header = () => {
               variant="ghost"
               size="sm"
               onClick={handleLoginClick}
-              className="text-secondary hover:text-accent hover:bg-primary/40"
+              className="text-primary hover:text-accent hover:bg-primary/10"
             >
               Login
             </Button>
@@ -106,24 +106,24 @@ export const Header = () => {
 
         {/* Mobile Navigation Dropdown */}
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-primary/95 backdrop-blur-md md:hidden">
+          <div className="absolute top-full left-0 right-0 bg-background/80 backdrop-blur-md md:hidden border-b border-primary/10">
             <nav className="container mx-auto px-4 py-4">
               <ul className="space-y-2">
                 {navigationItems.map((item) => (
                   <li key={item.href}>
                     <Link
                       to={item.href}
-                      className="block p-3 text-secondary hover:text-accent hover:bg-primary/40 rounded-md transition-colors duration-200"
+                      className="block p-3 text-primary hover:text-accent hover:bg-primary/5 rounded-md transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.title}
                     </Link>
                   </li>
                 ))}
-                <li className="pt-2 border-t border-primary/20">
+                <li className="pt-2 border-t border-primary/10">
                   {isLoggedIn ? (
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 p-3 text-secondary">
+                      <div className="flex items-center gap-2 p-3 text-primary">
                         <User className="h-4 w-4" />
                         <span className="text-sm">My Profile: Anna</span>
                       </div>
@@ -131,7 +131,7 @@ export const Header = () => {
                         variant="ghost"
                         size="sm"
                         onClick={handleLoginClick}
-                        className="w-full text-secondary hover:text-accent hover:bg-primary/40"
+                        className="w-full text-primary hover:text-accent hover:bg-primary/5"
                       >
                         <LogOut className="h-4 w-4 mr-2" />
                         Logout
@@ -142,7 +142,7 @@ export const Header = () => {
                       variant="ghost"
                       size="sm"
                       onClick={handleLoginClick}
-                      className="w-full text-secondary hover:text-accent hover:bg-primary/40"
+                      className="w-full text-primary hover:text-accent hover:bg-primary/5"
                     >
                       Login
                     </Button>
