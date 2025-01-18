@@ -20,6 +20,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
   const [userMessages, setUserMessages] = useState<Array<{text: string, sender: "user"}>>([]);
   const [showProfilePicture, setShowProfilePicture] = useState(false);
   const [profilePictureBuzz, setProfilePictureBuzz] = useState(false);
+  const [showAIRecommendation, setShowAIRecommendation] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -32,13 +33,13 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
     }
   }, [visibleMessages, userMessages]);
 
-  // Show more messages initially on mobile
   useEffect(() => {
     setVisibleMessages(0);
     setNewMessage("");
     setUserMessages([]);
     setShowProfilePicture(false);
     setProfilePictureBuzz(false);
+    setShowAIRecommendation(false);
     
     if (isActive) {
       const timer = setInterval(() => {
@@ -47,10 +48,16 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
             return prev + 1;
           }
           clearInterval(timer);
+          
+          // Show AI recommendation 2s after last message
           setTimeout(() => {
-            setShowProfilePicture(true);
-            setTimeout(() => setProfilePictureBuzz(true), 500);
-          }, 5000);
+            setShowAIRecommendation(true);
+            setTimeout(() => {
+              setShowProfilePicture(true);
+              setTimeout(() => setProfilePictureBuzz(true), 500);
+            }, 500);
+          }, 2000);
+          
           return prev;
         });
       }, 2000);
@@ -63,6 +70,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
     if (newMessage.trim()) {
       setUserMessages(prev => [...prev, { text: newMessage, sender: "user" }]);
       setNewMessage("");
+      scrollToBottom();
     }
   };
 
@@ -101,7 +109,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         <span>Anna's Wingman</span>
       </div>
 
-      <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+      <div className="space-y-2 max-h-[300px] md:max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         {profile.conversation.slice(0, visibleMessages).map((msg, index) => (
           <ChatBubble
             key={index}
@@ -121,7 +129,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {visibleMessages === profile.conversation.length && (
+      {visibleMessages === profile.conversation.length && showAIRecommendation && (
         <div className="mt-4 p-4 rounded-lg bg-secondary/10 animate-fade-in">
           <h4 className="font-semibold mb-2">Your Wingman's Recommendation</h4>
           <div className={cn(

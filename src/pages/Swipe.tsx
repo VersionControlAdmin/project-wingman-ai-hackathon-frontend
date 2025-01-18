@@ -57,7 +57,7 @@ const Swipe = () => {
 
   if (currentIndex >= profiles.length) {
     return (
-      <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
+      <div className="min-h-screen flex flex-col bg-primary overflow-hidden relative">
         <Header />
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center space-y-4 animate-fade-in">
@@ -75,7 +75,7 @@ const Swipe = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0">
+    <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0 w-full">
       <Header />
       <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
@@ -125,7 +125,7 @@ const Swipe = () => {
           <PhoneCall className="h-6 w-6 text-white" />
         </Button>
         
-        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-8 md:mt-0 gap-8 relative">
+        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative">
           {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
             <div
               key={profile.id}
@@ -150,7 +150,7 @@ const Swipe = () => {
             <MatchCard profile={profiles[currentIndex]} />
           </div>
 
-          <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50">
+          <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50 bg-primary/80 py-4 md:py-0 md:bg-transparent">
             <Button
               variant="ghost"
               size="icon"
