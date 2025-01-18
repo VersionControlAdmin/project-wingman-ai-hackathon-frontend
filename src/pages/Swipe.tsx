@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Meteors } from "@/components/ui/meteors";
 import { Button } from "@/components/ui/button";
 import { PhoneCall, X, Heart } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Swipe = () => {
@@ -26,7 +26,7 @@ const Swipe = () => {
     
     const timer = setTimeout(() => {
       setShowWelcome(false);
-    }, 3000);
+    }, 4000); // Changed from 3000 to 4000
 
     return () => clearTimeout(timer);
   }, [location]);
