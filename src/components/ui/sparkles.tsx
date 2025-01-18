@@ -17,7 +17,7 @@ export const Sparkles = ({
 
   const createSparkle = () => {
     const color = colors[Math.floor(Math.random() * colors.length)];
-    const size = Math.random() * 3;
+    const size = Math.random() * 3 + 2; // Increased base size
     const style = {
       top: Math.random() * 100 + "%",
       left: Math.random() * 100 + "%",
@@ -57,6 +57,9 @@ export const Sparkles = ({
             height: `${sparkle.size}px`,
             background: sparkle.color,
             borderRadius: "50%",
+            filter: "blur(0.5px)",
+            opacity: 0.8,
+            boxShadow: `0 0 ${sparkle.size * 2}px ${sparkle.color}`,
           }}
         />
       ))}
