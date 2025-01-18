@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Message } from "@/types/match";
 import { ChatBubble } from "./ChatBubble";
 import { Input } from "./ui/input";
@@ -28,6 +28,14 @@ export const ChatSection = ({
   onSendMessage,
 }: ChatSectionProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, userMessages, visibleMessages]);
 
   return (
     <div className="flex flex-col h-auto">
