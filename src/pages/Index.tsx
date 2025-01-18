@@ -8,7 +8,6 @@ import { AuroraBackground } from "@/components/ui/aurora-background";
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Sparkles } from "@/components/ui/sparkles";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -67,16 +66,6 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               Find friends and love based on your unique character
             </p>
-
-            <div className="relative w-fit mx-auto">
-              <Sparkles>
-                <span className="text-[#9b87f5] text-2xl font-semibold">
-                  Project Wingman
-                </span>
-              </Sparkles>
-              <div className="absolute -bottom-2 left-0 right-0 h-[2px] bg-white/50 blur-[2px]"></div>
-              <div className="absolute -bottom-2 left-0 right-0 h-[2px] bg-white"></div>
-            </div>
             
             <div className="flex justify-center pt-8">
               <MagnetizeButton

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Heart } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -125,15 +125,10 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-primary/20 pt-6 flex flex-col lg:flex-row justify-between items-center">
-          <p className="text-xs text-muted text-center lg:text-left">
+        <div className="mt-8 border-t border-primary/20 pt-6 text-center">
+          <p className="text-xs text-muted">
             © {year} Project Wingman. All rights reserved.
           </p>
-          <div className="flex items-center gap-2 text-xs text-muted mt-4 lg:mt-0">
-            <span>Made with</span>
-            <Heart className="h-4 w-4 text-accent" />
-            <span>by Project Wingman</span>
-          </div>
         </div>
       </div>
     </footer>
