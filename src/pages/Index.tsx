@@ -8,6 +8,7 @@ import { AuroraBackground } from "@/components/ui/aurora-background";
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Sparkles } from "@/components/ui/sparkles";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -68,9 +69,11 @@ const Index = () => {
             </p>
 
             <div className="relative w-fit mx-auto">
-              <span className="text-[#9b87f5] text-2xl font-semibold">
-                Project Wingman
-              </span>
+              <Sparkles>
+                <span className="text-[#9b87f5] text-2xl font-semibold">
+                  Project Wingman
+                </span>
+              </Sparkles>
               <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-[#D6BCFA] via-[#9b87f5] to-[#D6BCFA] opacity-80"></div>
             </div>
             
