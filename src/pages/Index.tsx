@@ -32,10 +32,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
-      <main className="flex-1 relative">
+      <main className="flex-1">
         <AuroraBackground className="absolute inset-0" />
         
-        <div className="container mx-auto px-4 py-12 relative">
+        <div className="container mx-auto px-4 py-8">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
