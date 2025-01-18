@@ -21,10 +21,8 @@ const Swipe = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Don't buzz if coming from conversation page
     setShouldBuzz(location.state?.fromPage !== 'conversation');
     
-    // Show welcome message for 3 seconds
     const timer = setTimeout(() => {
       setShowWelcome(false);
     }, 3000);
@@ -33,7 +31,6 @@ const Swipe = () => {
   }, [location]);
 
   useEffect(() => {
-    // Enable phone buzz when all profiles are swiped
     if (currentIndex >= profiles.length) {
       setShouldBuzz(true);
     }
@@ -128,8 +125,7 @@ const Swipe = () => {
           <PhoneCall className="h-6 w-6 text-white" />
         </Button>
         
-        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-8 md:mt-0 gap-8">
-          {/* Stack of future cards */}
+        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-8 md:mt-0 gap-8 relative">
           {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
             <div
               key={profile.id}
@@ -144,7 +140,6 @@ const Swipe = () => {
             </div>
           ))}
 
-          {/* Current card */}
           <div 
             className={cn(
               "relative z-10 transition-all duration-300 w-full",
@@ -155,8 +150,7 @@ const Swipe = () => {
             <MatchCard profile={profiles[currentIndex]} />
           </div>
 
-          {/* Action buttons */}
-          <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0">
+          <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50">
             <Button
               variant="ghost"
               size="icon"

@@ -136,7 +136,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
       {visibleMessages === profile.conversation.length && (
         <div className="flex items-center gap-2 mt-4 animate-fade-in">
           <Input
-            placeholder="Ask their Wingman a question... They're here to help!"
+            placeholder="Ask their Wingman a question..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
