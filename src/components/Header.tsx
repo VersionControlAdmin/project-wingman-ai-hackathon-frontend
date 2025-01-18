@@ -30,18 +30,18 @@ export const Header = () => {
       <div className="absolute inset-0 bg-background/5 supports-[backdrop-filter]:bg-background/10 backdrop-blur-xl" />
       <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
         <div 
-          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity text-white"
           onClick={() => navigate("/")}
         >
           <img src="/placeholder.svg" alt="Logo" className="h-8 w-8" />
-          <span className="font-semibold text-primary">Project Wingly</span>
+          <span className="font-semibold">Project Wingly</span>
         </div>
 
         {/* Mobile Menu Button */}
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden text-primary hover:text-accent hover:bg-primary/10"
+          className="md:hidden text-white hover:text-accent hover:bg-primary/10"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? (
@@ -56,11 +56,11 @@ export const Header = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-primary hover:text-accent hover:bg-primary/10">
+                <NavigationMenuTrigger className="bg-transparent text-white hover:text-accent hover:bg-primary/10">
                   Navigation
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[200px] gap-2 p-4 bg-background/80 backdrop-blur-md text-primary">
+                  <ul className="grid w-[200px] gap-2 p-4 bg-background/80 backdrop-blur-md">
                     {navigationItems.map((item) => (
                       <li key={item.href}>
                         <Link
@@ -79,15 +79,15 @@ export const Header = () => {
           
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-primary" />
-                <span className="text-sm text-primary">My Profile: Anna</span>
+              <div className="flex items-center gap-2 text-white">
+                <User className="h-4 w-4" />
+                <span className="text-sm">My Profile: Anna</span>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleLoginClick}
-                className="text-primary hover:text-accent hover:bg-primary/10"
+                className="text-white hover:text-accent hover:bg-primary/10"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
@@ -98,7 +98,7 @@ export const Header = () => {
               variant="ghost"
               size="sm"
               onClick={handleLoginClick}
-              className="text-primary hover:text-accent hover:bg-primary/10"
+              className="text-white hover:text-accent hover:bg-primary/10"
             >
               Login
             </Button>
@@ -114,7 +114,7 @@ export const Header = () => {
                   <li key={item.href}>
                     <Link
                       to={item.href}
-                      className="block p-3 text-primary hover:text-accent hover:bg-primary/5 rounded-md transition-colors duration-200"
+                      className="block p-3 text-white hover:text-accent hover:bg-primary/5 rounded-md transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.title}
@@ -124,7 +124,7 @@ export const Header = () => {
                 <li className="pt-2 border-t border-primary/10">
                   {isLoggedIn ? (
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 p-3 text-primary">
+                      <div className="flex items-center gap-2 p-3 text-white">
                         <User className="h-4 w-4" />
                         <span className="text-sm">My Profile: Anna</span>
                       </div>
@@ -132,7 +132,7 @@ export const Header = () => {
                         variant="ghost"
                         size="sm"
                         onClick={handleLoginClick}
-                        className="w-full text-primary hover:text-accent hover:bg-primary/5"
+                        className="w-full text-white hover:text-accent hover:bg-primary/5"
                       >
                         <LogOut className="h-4 w-4 mr-2" />
                         Logout
@@ -143,7 +143,7 @@ export const Header = () => {
                       variant="ghost"
                       size="sm"
                       onClick={handleLoginClick}
-                      className="w-full text-primary hover:text-accent hover:bg-primary/5"
+                      className="w-full text-white hover:text-accent hover:bg-primary/5"
                     >
                       Login
                     </Button>
