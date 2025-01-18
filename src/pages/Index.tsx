@@ -77,7 +77,7 @@ const Index = () => {
               </MagnetizeButton>
             </div>
 
-            <div className="flex items-center justify-start gap-2">
+            <div className="flex items-center justify-start gap-2 pb-4">
               <div className="flex -space-x-2">
                 {mockProfiles.slice(0, 3).map((profile) => (
                   <div

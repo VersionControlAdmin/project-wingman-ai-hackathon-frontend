@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Meteors } from "@/components/ui/meteors";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const Conversation = () => {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ const Conversation = () => {
   const handleEndCall = () => {
     navigate('/swipe', { state: { fromPage: 'conversation' } });
     toast("Call has ended", {
-      description: "You can now continue swiping"
+      description: "You can now continue swiping",
+      duration: 2000,
     });
   };
 
@@ -35,22 +37,37 @@ const Conversation = () => {
         </div>
 
         <div className="text-center space-y-8 relative z-10">
-          <h2 className="text-2xl font-semibold text-primary-foreground animate-fade-in">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl font-semibold text-primary-foreground"
+          >
             Connecting...
-          </h2>
+          </motion.h2>
 
           {showEndCall && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "w-14 h-14 rounded-full animate-fade-in",
-                "bg-destructive hover:bg-destructive/80"
-              )}
-              onClick={handleEndCall}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 260,
+                damping: 20 
+              }}
             >
-              <PhoneOff className="h-6 w-6 text-white" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "w-14 h-14 rounded-full animate-fade-in",
+                  "bg-destructive hover:bg-destructive/80"
+                )}
+                onClick={handleEndCall}
+              >
+                <PhoneOff className="h-6 w-6 text-white" />
+              </Button>
+            </motion.div>
           )}
         </div>
       </div>
