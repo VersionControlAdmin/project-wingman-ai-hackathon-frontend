@@ -33,7 +33,7 @@ export const Header = () => {
           onClick={() => navigate("/")}
         >
           <img src="/placeholder.svg" alt="Logo" className="h-8 w-8" />
-          <span className="font-semibold text-secondary">Project Wingman</span>
+          <span className="font-semibold text-secondary">Project Wingly</span>
         </div>
 
         {/* Mobile Menu Button */}

@@ -73,7 +73,7 @@ const Index = () => {
                 className="px-8 py-4"
               >
                 <MessageSquare className="h-5 w-5" />
-                Start talking to Jason, your personal Wingman
+                Start talking to Jason, your personal Wingly
               </MagnetizeButton>
             </div>
 

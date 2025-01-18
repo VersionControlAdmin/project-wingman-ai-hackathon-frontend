@@ -127,7 +127,7 @@ export const Footer = () => {
 
         <div className="mt-8 border-t border-primary/20 pt-6 text-center">
           <p className="text-xs text-muted">
-            © {year} Project Wingman. All rights reserved.
+            © {year} Project Wingly. All rights reserved.
           </p>
         </div>
       </div>
