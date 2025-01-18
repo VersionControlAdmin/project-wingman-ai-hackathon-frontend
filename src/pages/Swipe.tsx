@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { mockProfiles, Profile } from "@/data/mockProfiles";
 import { MatchCard } from "@/components/MatchCard";
 import { Header } from "@/components/Header";
 import { cn } from "@/lib/utils";
 import { Meteors } from "@/components/ui/meteors";
+import { Button } from "@/components/ui/button";
+import { PhoneCall } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Swipe = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [profiles] = useState<Profile[]>(mockProfiles);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
+  const [shouldBuzz, setShouldBuzz] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Don't buzz if coming from conversation page
+    setShouldBuzz(location.state?.fromPage !== 'conversation');
+  }, [location]);
 
   const handleSwipe = (liked: boolean) => {
     setDirection(liked ? "right" : "left");
@@ -19,6 +32,14 @@ const Swipe = () => {
       setCurrentIndex((prev) => prev + 1);
       setDirection(null);
     }, 300);
+  };
+
+  const handleCallClick = () => {
+    navigate('/conversation', { state: { fromPage: 'swipe' } });
+    toast({
+      title: "Starting call...",
+      description: "Connecting to the other person",
+    });
   };
 
   if (currentIndex >= profiles.length) {
@@ -47,6 +68,19 @@ const Swipe = () => {
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>
+        
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "absolute right-4 top-20 z-50 w-12 h-12 rounded-full",
+            "bg-accent hover:bg-accent/80",
+            shouldBuzz && "animate-buzz"
+          )}
+          onClick={handleCallClick}
+        >
+          <PhoneCall className="h-6 w-6 text-white" />
+        </Button>
         
         <div className="relative w-full max-w-4xl">
           {/* Stack of future cards */}

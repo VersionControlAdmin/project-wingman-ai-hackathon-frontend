@@ -23,11 +23,11 @@ const Index = () => {
   );
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutId = setInterval(() => {
       setTitleNumber((prev) => (prev === titles.length - 1 ? 0 : prev + 1));
     }, 3000);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles.length]);
+    return () => clearInterval(timeoutId);
+  }, [titles.length]);
 
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
@@ -40,21 +40,21 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
               <h1 className="text-4xl md:text-6xl font-bold text-white relative z-10">
                 Find friends & love—
-                <div className="h-[120px] md:h-[140px] relative flex justify-center items-center overflow-hidden">
+                <div className="h-[80px] md:h-[120px] relative flex justify-center items-center overflow-hidden">
                   {titles.map((title, index) => (
                     <motion.span
                       key={index}
-                      className={cn(
-                        "absolute w-full",
-                        "transition-all duration-300"
-                      )}
+                      className="absolute w-full"
                       initial={{ opacity: 0, y: 50 }}
-                      animate={
-                        titleNumber === index
-                          ? { y: 0, opacity: 1 }
-                          : { y: titleNumber > index ? -50 : 50, opacity: 0 }
-                      }
-                      transition={{ type: "spring", stiffness: 50 }}
+                      animate={{
+                        y: titleNumber === index ? 0 : titleNumber > index ? -50 : 50,
+                        opacity: titleNumber === index ? 1 : 0
+                      }}
+                      transition={{ 
+                        type: "spring",
+                        duration: 0.6,
+                        bounce: 0.3
+                      }}
                     >
                       {title}
                     </motion.span>
