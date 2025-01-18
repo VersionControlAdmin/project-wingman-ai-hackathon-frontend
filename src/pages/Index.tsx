@@ -64,9 +64,18 @@ const Index = () => {
               </h1>
             </div>
             
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+            <motion.p 
+              initial={{ opacity: 0.0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.3,
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+              className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
+            >
               Find friends and love based on unique character with <Sparkles>Wingly</Sparkles>
-            </p>
+            </motion.p>
             
             <div className="flex justify-center pt-8">
               <MagnetizeButton
