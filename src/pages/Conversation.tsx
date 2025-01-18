@@ -29,8 +29,7 @@ const Conversation = () => {
         cursorWidth: 0,
         barWidth: 3,
         barGap: 4,
-        barRadius: 3,
-        responsive: true,
+        barRadius: 3
       });
 
       // Initialize remote waveform
@@ -42,8 +41,7 @@ const Conversation = () => {
         cursorWidth: 0,
         barWidth: 3,
         barGap: 4,
-        barRadius: 3,
-        responsive: true,
+        barRadius: 3
       });
 
       // Load demo audio data
@@ -126,12 +124,12 @@ const Conversation = () => {
     <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-zinc-900">
       <div className="w-full max-w-4xl flex-1 flex flex-col justify-center gap-16 px-4">
         {/* Remote audio waveform (AI) */}
-        <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm">
+        <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm w-full">
           <div ref={remoteWaveformRef} className="w-full" />
         </div>
         
         {/* Local audio waveform (User) */}
-        <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm">
+        <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm w-full">
           <div ref={localWaveformRef} className="w-full" />
         </div>
       </div>
