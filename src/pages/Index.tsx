@@ -74,7 +74,8 @@ const Index = () => {
                   Project Wingman
                 </span>
               </Sparkles>
-              <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-[#D6BCFA] via-[#9b87f5] to-[#D6BCFA] opacity-80"></div>
+              <div className="absolute -bottom-2 left-0 right-0 h-[2px] bg-white/50 blur-[2px]"></div>
+              <div className="absolute -bottom-2 left-0 right-0 h-[2px] bg-white"></div>
             </div>
             
             <div className="flex justify-center pt-8">
