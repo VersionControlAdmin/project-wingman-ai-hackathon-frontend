@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MessageSquare } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
+import { mockProfiles } from "@/data/mockProfiles";
 
 const Index = () => {
   const navigate = useNavigate();
