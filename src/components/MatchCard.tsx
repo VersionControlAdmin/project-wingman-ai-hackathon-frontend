@@ -44,7 +44,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
     if (isActive) {
       const timer = setInterval(() => {
         setVisibleMessages((prev) => {
-          if (prev < (window.innerWidth < 768 ? Math.min(4, profile.conversation.length) : profile.conversation.length)) {
+          if (prev < profile.conversation.length) {
             return prev + 1;
           }
           clearInterval(timer);
@@ -109,52 +109,54 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         <span>Anna's Wingman</span>
       </div>
 
-      <div className="space-y-2 max-h-[300px] md:max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {profile.conversation.slice(0, visibleMessages).map((msg, index) => (
-          <ChatBubble
-            key={index}
-            message={msg.text}
-            isUser={msg.sender === "user"}
-            className="animate-fade-in"
-          />
-        ))}
-        {userMessages.map((msg, index) => (
-          <ChatBubble
-            key={`user-${index}`}
-            message={msg.text}
-            isUser={true}
-            className="animate-fade-in"
-          />
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+      <div className="flex flex-col h-[calc(100vh-450px)] md:h-auto">
+        <div className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent min-h-[200px] max-h-[300px] md:max-h-[400px]">
+          {profile.conversation.slice(0, visibleMessages).map((msg, index) => (
+            <ChatBubble
+              key={index}
+              message={msg.text}
+              isUser={msg.sender === "user"}
+              className="animate-fade-in"
+            />
+          ))}
+          {userMessages.map((msg, index) => (
+            <ChatBubble
+              key={`user-${index}`}
+              message={msg.text}
+              isUser={true}
+              className="animate-fade-in"
+            />
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
 
-      {visibleMessages === profile.conversation.length && showAIRecommendation && (
-        <div className="mt-4 p-4 rounded-lg bg-secondary/10 animate-fade-in">
-          <h4 className="font-semibold mb-2">Your Wingman's Recommendation</h4>
-          <div className={cn(
-            "text-sm p-2 rounded",
-            profile.aiRecommendation.isMatch ? "bg-success/20" : "bg-destructive/20"
-          )}>
-            {profile.aiRecommendation.reason}
+        {visibleMessages === profile.conversation.length && showAIRecommendation && (
+          <div className="mt-4 p-4 rounded-lg bg-secondary/10 animate-fade-in">
+            <h4 className="font-semibold mb-2">Your Wingman's Recommendation</h4>
+            <div className={cn(
+              "text-sm p-2 rounded",
+              profile.aiRecommendation.isMatch ? "bg-success/20" : "bg-destructive/20"
+            )}>
+              {profile.aiRecommendation.reason}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {visibleMessages === profile.conversation.length && (
-        <div className="flex items-center gap-2 mt-4 animate-fade-in">
-          <Input
-            placeholder="Ask their Wingman a question..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-            className="placeholder:text-gray-500"
-          />
-          <Button size="icon" onClick={handleSendMessage}>
-            <Send className="h-4 w-4" />
-          </Button>
-        </div>
-      )}
+        {visibleMessages === profile.conversation.length && (
+          <div className="flex items-center gap-2 mt-4 animate-fade-in">
+            <Input
+              placeholder="Ask their Wingman a question..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+              className="placeholder:text-gray-500"
+            />
+            <Button size="icon" onClick={handleSendMessage}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+      </div>
 
       <Dialog open={imageOpen} onOpenChange={setImageOpen}>
         <DialogContent className="max-w-[90vw] max-h-[90vh] w-auto">
