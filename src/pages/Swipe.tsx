@@ -129,36 +129,51 @@ const Swipe = () => {
         </Button>
         
         <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative">
-          {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
-            <div
-              key={profile.id}
-              className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
-              style={{
-                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05})`,
-                zIndex: -idx,
-                opacity: 0.5 - idx * 0.1,
-                transition: 'all 0.3s ease-out',
-              }}
-            >
-              <MatchCard profile={profile} isActive={false} />
-            </div>
-          ))}
+          <AnimatePresence mode="wait">
+            {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
+              <motion.div
+                key={profile.id}
+                initial={{ scale: 0.95 - (idx + 1) * 0.05, y: 0 }}
+                animate={{ 
+                  scale: 0.95 - idx * 0.05,
+                  y: 0,
+                  opacity: 0.5 - idx * 0.1
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+                className="absolute left-1/2 top-1/2 w-full"
+                style={{
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: -idx,
+                }}
+              >
+                <MatchCard profile={profile} isActive={false} />
+              </motion.div>
+            ))}
 
-          <motion.div 
-            className={cn(
-              "relative z-10 w-full",
-              direction === "left" && "translate-x-[-100%] opacity-0 rotate-[-10deg]",
-              direction === "right" && "translate-x-[100%] opacity-0 rotate-[10deg]"
-            )}
-            style={{
-              transition: 'all 0.3s ease-out',
-            }}
-          >
-            <MatchCard 
-              profile={profiles[currentIndex]} 
-              isActive={!isCardMoving}
-            />
-          </motion.div>
+            <motion.div 
+              key={profiles[currentIndex].id}
+              initial={{ scale: 1, x: direction === "left" ? -100 : direction === "right" ? 100 : 0 }}
+              animate={{ 
+                scale: 1,
+                x: direction ? (direction === "left" ? -1000 : 1000) : 0,
+                opacity: direction ? 0 : 1,
+                rotate: direction ? (direction === "left" ? -10 : 10) : 0
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut"
+              }}
+              className="relative z-10 w-full"
+            >
+              <MatchCard 
+                profile={profiles[currentIndex]} 
+                isActive={!isCardMoving}
+              />
+            </motion.div>
+          </AnimatePresence>
 
           <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50 bg-primary/80 py-4 md:py-0 md:bg-transparent">
             <Button
