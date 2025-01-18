@@ -6,7 +6,7 @@ import { Header } from "@/components/Header";
 import { cn } from "@/lib/utils";
 import { Meteors } from "@/components/ui/meteors";
 import { Button } from "@/components/ui/button";
-import { PhoneCall } from "lucide-react";
+import { PhoneCall, X, Heart } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Swipe = () => {
@@ -64,7 +64,7 @@ const Swipe = () => {
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0">
       <Header />
-      <div className="flex-1 flex items-center justify-center relative px-4 py-8 md:p-4">
+      <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>
@@ -82,7 +82,7 @@ const Swipe = () => {
           <PhoneCall className="h-6 w-6 text-white" />
         </Button>
         
-        <div className="relative w-full max-w-md mx-auto mt-20 mb-8 md:mt-0">
+        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-8 md:mt-0 gap-8">
           {/* Stack of future cards */}
           {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
             <div
@@ -101,16 +101,39 @@ const Swipe = () => {
           {/* Current card */}
           <div 
             className={cn(
-              "relative z-10 transition-all duration-300",
+              "relative z-10 transition-all duration-300 w-full",
               direction === "left" && "translate-x-[-100%] opacity-0 rotate-[-10deg]",
               direction === "right" && "translate-x-[100%] opacity-0 rotate-[10deg]"
             )}
           >
-            <MatchCard
-              profile={profiles[currentIndex]}
-              onSwipeLeft={() => handleSwipe(false)}
-              onSwipeRight={() => handleSwipe(true)}
-            />
+            <MatchCard profile={profiles[currentIndex]} />
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "w-14 h-14 rounded-full border-2 transition-all duration-300",
+                "border-destructive/30 hover:border-destructive hover:bg-destructive/20"
+              )}
+              onClick={() => handleSwipe(false)}
+            >
+              <X className="h-6 w-6 text-destructive hover:text-destructive-foreground" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "w-14 h-14 rounded-full border-2 transition-all duration-300",
+                "border-success/30 hover:border-success hover:bg-success/20"
+              )}
+              onClick={() => handleSwipe(true)}
+            >
+              <Heart className="h-6 w-6 text-success hover:text-success-foreground" />
+            </Button>
           </div>
         </div>
       </div>
