@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { LogOut, User, ChevronDown } from "lucide-react";
+import { LogOut, User, ChevronDown, Menu, X } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -13,6 +12,7 @@ import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLoginClick = () => {
     setIsLoggedIn(!isLoggedIn);
@@ -32,7 +32,22 @@ export const Header = () => {
           <span className="font-semibold text-secondary">Project Wingman</span>
         </div>
 
-        <div className="flex items-center gap-4">
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden text-secondary hover:text-accent hover:bg-primary/40"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </Button>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-4">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -84,6 +99,55 @@ export const Header = () => {
             </Button>
           )}
         </div>
+
+        {/* Mobile Navigation Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-full left-0 right-0 bg-primary/95 backdrop-blur-md md:hidden">
+            <nav className="container mx-auto px-4 py-4">
+              <ul className="space-y-2">
+                {navigationItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      to={item.href}
+                      className="block p-3 text-secondary hover:text-accent hover:bg-primary/40 rounded-md transition-colors duration-200"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+                <li className="pt-2 border-t border-primary/20">
+                  {isLoggedIn ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 p-3 text-secondary">
+                        <User className="h-4 w-4" />
+                        <span className="text-sm">My Profile: Anna</span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleLoginClick}
+                        className="w-full text-secondary hover:text-accent hover:bg-primary/40"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Logout
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleLoginClick}
+                      className="w-full text-secondary hover:text-accent hover:bg-primary/40"
+                    >
+                      Login
+                    </Button>
+                  )}
+                </li>
+              </ul>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
