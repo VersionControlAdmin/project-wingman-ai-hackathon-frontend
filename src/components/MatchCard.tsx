@@ -92,16 +92,19 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
         )}
       >
         <div className="flex items-center space-x-4 mb-6">
-          <img
-            src={profile.avatar}
-            alt={profile.name}
-            className={cn(
-              "w-16 h-16 rounded-full object-cover cursor-pointer transition-all duration-300",
-              !showProfilePicture && "blur-md",
-              profilePictureBuzz && "animate-buzz",
-            )}
-            onClick={() => setImageOpen(true)}
-          />
+          <div className="relative group">
+            <div className="absolute inset-0 rounded-full bg-[#555555] opacity-0 group-hover:opacity-50 transition-opacity duration-300 blur-md" />
+            <img
+              src={profile.avatar}
+              alt={profile.name}
+              className={cn(
+                "w-16 h-16 rounded-full object-cover cursor-pointer transition-all duration-300 relative z-10",
+                !showProfilePicture && "blur-md",
+                profilePictureBuzz && "animate-buzz",
+              )}
+              onClick={() => setImageOpen(true)}
+            />
+          </div>
           <div>
             <h3 className="text-lg font-semibold text-primary">
               {profile.name}, {profile.age} • {profile.city}
@@ -115,7 +118,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
           <span>Anna's Wingman</span>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
           {profile.conversation.slice(0, visibleMessages).map((msg, index) => (
             <ChatBubble
               key={index}

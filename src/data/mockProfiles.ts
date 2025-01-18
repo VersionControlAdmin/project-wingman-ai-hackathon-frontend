@@ -105,5 +105,29 @@ export const mockProfiles: Profile[] = [
       isMatch: true,
       reason: "Exceptional alignment in values and life purpose. Both demonstrate strong commitment to environmental causes and share a deep connection to nature. Their complementary approaches to activism and education suggest a powerful potential for both personal and professional synergy.",
     },
+  },
+  {
+    id: 6,
+    name: "Marie",
+    age: 29,
+    city: "Berlin",
+    bio: "Tech entrepreneur, yoga enthusiast, and avid reader",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
+    conversation: [
+      { sender: "match", text: "Hi! I noticed you're into entrepreneurship!" },
+      { sender: "user", text: "Yes! I love building innovative solutions." },
+      { sender: "match", text: "That's fascinating! What sector are you focusing on?" },
+      { sender: "user", text: "Currently working on AI-driven healthcare solutions." },
+      { sender: "match", text: "Healthcare tech is booming! Any specific problem you're solving?" },
+      { sender: "user", text: "We're developing predictive analytics for patient care." },
+      { sender: "match", text: "That could really impact lives! How's the progress?" },
+      { sender: "user", text: "We're in beta testing with several clinics." },
+      { sender: "match", text: "Amazing! Do you also practice yoga to balance the startup stress?" },
+      { sender: "user", text: "Absolutely! It keeps me grounded and focused." }
+    ],
+    aiRecommendation: {
+      isMatch: true,
+      reason: "Strong alignment in entrepreneurial spirit and wellness practices. Both demonstrate a passion for innovation and maintaining work-life balance through yoga. Their complementary approaches to business and personal growth suggest excellent potential for a meaningful connection.",
+    },
   }
 ];

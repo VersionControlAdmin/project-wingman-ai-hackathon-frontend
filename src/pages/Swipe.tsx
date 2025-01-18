@@ -41,9 +41,13 @@ const Swipe = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0">
       <Header />
-      <div className="flex-1 flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4 relative">
+        <div className="absolute inset-0">
+          <Meteors number={20} />
+        </div>
+        
         <div className="relative w-full max-w-4xl">
           {/* Stack of future cards */}
           {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
@@ -51,7 +55,7 @@ const Swipe = () => {
               key={profile.id}
               className="absolute left-1/2 top-[40%]"
               style={{
-                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05}) translate(${idx * 10}px, ${idx * 10}px)`,
+                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05}) translate(${idx * 20}px, ${idx * 20}px)`,
                 zIndex: -idx,
                 opacity: 0.5 - idx * 0.1,
               }}
@@ -76,7 +80,6 @@ const Swipe = () => {
           </div>
         </div>
       </div>
-      <Meteors />
     </div>
   );
 };
