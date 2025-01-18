@@ -8,6 +8,7 @@ const Conversation = () => {
   const location = useLocation();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
     // Fetch messages based on conversation ID from location
@@ -28,6 +29,12 @@ const Conversation = () => {
       setMessages((prev) => [...prev, { id: Date.now(), text: newMessage, sender: "user" }]);
       setNewMessage("");
     }
+  };
+
+  const handleMicrophoneClick = () => {
+    setIsRecording(!isRecording);
+    // Add your recording logic here
+    console.log("Microphone clicked, recording:", !isRecording);
   };
 
   return (
@@ -53,7 +60,11 @@ const Conversation = () => {
               placeholder="Type a message..."
             />
             <Button onClick={handleSendMessage} className="ml-2">Send</Button>
-            <MicrophoneButton />
+            <MicrophoneButton 
+              isRecording={isRecording}
+              onClick={handleMicrophoneClick}
+              className="ml-2"
+            />
           </div>
         </div>
       </div>
