@@ -29,9 +29,9 @@ const Conversation = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary">
+    <div className="h-screen flex flex-col bg-primary">
       <Header />
-      <div className="flex-1 flex items-center justify-center p-4 relative">
+      <div className="flex-1 flex items-center justify-center relative">
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>

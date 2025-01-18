@@ -60,9 +60,12 @@ const Swipe = () => {
 
   if (currentIndex >= profiles.length) {
     return (
-      <div className="min-h-screen flex flex-col bg-primary">
+      <div className="h-screen flex flex-col bg-primary">
         <Header />
-        <div className="flex-1 flex items-center justify-center p-4">
+        <div className="flex-1 flex items-center justify-center relative">
+          <div className="absolute inset-0">
+            <Meteors />
+          </div>
           <div className="text-center space-y-4 animate-fade-in relative z-10">
             <h2 className="text-2xl font-semibold text-white">
               That's it for now!
@@ -72,15 +75,14 @@ const Swipe = () => {
             </p>
           </div>
         </div>
-        <Meteors />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary">
+    <div className="h-screen flex flex-col bg-primary">
       <Header />
-      <div className="flex-1 flex items-center justify-center p-4 relative">
+      <div className="flex-1 flex items-center justify-center relative">
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>
