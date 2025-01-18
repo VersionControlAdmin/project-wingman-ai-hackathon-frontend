@@ -77,29 +77,28 @@ const Index = () => {
               </MagnetizeButton>
             </div>
 
-            <div className="flex items-center justify-center gap-2 py-12">
-              <div className="flex -space-x-4">
-                {mockProfiles.slice(0, 3).map((profile) => (
-                  <div
-                    key={profile.id}
-                    className="relative group"
-                  >
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300" />
-                    <img
-                      src={profile.avatar}
-                      alt={profile.name}
-                      className="relative w-12 h-12 rounded-full border-2 border-white"
-                    />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 px-2 py-1 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                      {profile.name}
-                    </div>
+          <div className="flex items-center justify-start gap-2 mt-8">
+            <div className="flex -space-x-2">
+              {mockProfiles.slice(0, 3).map((profile) => (
+                <div
+                  key={profile.id}
+                  className="relative group"
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300" />
+                  <img
+                    src={profile.avatar}
+                    alt={profile.name}
+                    className="relative w-12 h-12 rounded-full border-2 border-white object-cover aspect-square"
+                  />
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 px-2 py-1 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    {profile.name}
                   </div>
-                ))}
-              </div>
-              <span className="text-muted-foreground ml-2">
-                Join Marie, Luna & 1000+ others from Berlin already using the platform
-              </span>
+                </div>
+              ))}
             </div>
+            <span className="text-muted-foreground text-left">
+              Join Marie, Luna & 1000+ others from Berlin already using the platform
+            </span>
           </div>
         </section>
       </main>

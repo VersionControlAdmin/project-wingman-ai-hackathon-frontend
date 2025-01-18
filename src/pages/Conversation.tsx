@@ -5,11 +5,14 @@ import { MicrophoneButton } from "@/components/MicrophoneButton";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, PhoneOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Conversation = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isCallActive, setIsCallActive] = useState(false);
   const [micVolume, setMicVolume] = useState<number>(0);
+  const [isConnecting, setIsConnecting] = useState(true);
+  const navigate = useNavigate();
   
   const { toast } = useToast();
   
@@ -83,6 +86,17 @@ const Conversation = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Handle connecting state
+    if (isConnecting) {
+      const timer = setTimeout(() => {
+        setIsConnecting(false);
+        setIsCallActive(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isConnecting]);
+
   const startCall = async () => {
     try {
       // In a real implementation, this would connect to your API
@@ -112,7 +126,6 @@ const Conversation = () => {
   const endCall = () => {
     // Clean up API connection
     if (apiConnection.current) {
-      // apiConnection.current.close();
       apiConnection.current = null;
     }
 
@@ -131,6 +144,8 @@ const Conversation = () => {
       title: "Call ended",
       description: "Connection closed",
     });
+
+    navigate('/swipe');
   };
 
   const handleMicClick = async () => {
@@ -174,6 +189,21 @@ const Conversation = () => {
       });
     }
   };
+
+  if (isConnecting) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-primary">
+        <div className="relative w-24 h-24 mb-8">
+          <div className="absolute inset-0 border-4 border-accent rounded-full animate-[spin_3s_linear_infinite]" />
+          <div className="absolute inset-2 border-4 border-secondary rounded-full animate-[spin_2s_linear_infinite_reverse]" />
+          <div className="absolute inset-4 border-4 border-muted rounded-full animate-[spin_1.5s_linear_infinite]" />
+        </div>
+        <h2 className="text-2xl font-semibold text-white animate-pulse">
+          Your call is connecting...
+        </h2>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-zinc-900">
