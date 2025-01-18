@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Meteors } from "@/components/ui/meteors";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import DualAudioWaveform from "@/components/DualAudioWaveform";
 
 const Conversation = () => {
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ const Conversation = () => {
           >
             Connecting...
           </motion.h2>
+
+          <DualAudioWaveform />
 
           {showEndCall && (
             <motion.div
