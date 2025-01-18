@@ -87,6 +87,18 @@ export default {
           "20%, 40%, 60%, 80%": { transform: "translateX(1px)" },
           "100%": { transform: "translateX(0)" },
         },
+        "slide-up": {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        "slide-right": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -94,6 +106,9 @@ export default {
         "fade-in": "fade-in 0.5s ease-out",
         typing: "typing 3.5s steps(40, end), blink .75s step-end infinite",
         buzz: "buzz 0.8s cubic-bezier(.36,.07,.19,.97) both",
+        "slide-up": "slide-up 0.3s ease-out",
+        "slide-left": "slide-left 0.3s ease-out",
+        "slide-right": "slide-right 0.3s ease-out",
       },
     },
   },
