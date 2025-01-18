@@ -60,14 +60,14 @@ const Swipe = () => {
 
   if (currentIndex >= profiles.length) {
     return (
-      <div className="min-h-screen flex flex-col bg-primary overflow-hidden relative">
+      <div className="min-h-screen flex flex-col bg-primary">
         <Header />
         <div className="flex-1 flex items-center justify-center p-4">
-          <div className="text-center space-y-4 animate-fade-in">
-            <h2 className="text-2xl font-semibold text-primary-foreground">
+          <div className="text-center space-y-4 animate-fade-in relative z-10">
+            <h2 className="text-2xl font-semibold text-white">
               That's it for now!
             </h2>
-            <p className="text-muted">
+            <p className="text-white">
               We'll notify you when new matches are available.
             </p>
           </div>
@@ -78,7 +78,7 @@ const Swipe = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary overflow-hidden fixed inset-0 w-full">
+    <div className="min-h-screen flex flex-col bg-primary">
       <Header />
       <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
@@ -95,7 +95,7 @@ const Swipe = () => {
             >
               <div className="text-center space-y-4 p-8 rounded-lg">
                 <motion.h2 
-                  className="text-3xl font-bold text-primary-foreground"
+                  className="text-3xl font-bold text-white"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -103,7 +103,7 @@ const Swipe = () => {
                   Jason, your Wingman
                 </motion.h2>
                 <motion.p 
-                  className="text-xl text-muted-foreground"
+                  className="text-xl text-white"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}

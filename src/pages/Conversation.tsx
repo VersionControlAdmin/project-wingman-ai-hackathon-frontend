@@ -29,7 +29,7 @@ const Conversation = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-primary">
       <Header />
       <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
@@ -41,7 +41,7 @@ const Conversation = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-2xl font-semibold text-primary-foreground"
+            className="text-2xl font-semibold text-white"
           >
             Connecting...
           </motion.h2>
@@ -60,7 +60,7 @@ const Conversation = () => {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "w-14 h-14 rounded-full animate-fade-in",
+                  "w-14 h-14 rounded-full",
                   "bg-destructive hover:bg-destructive/80"
                 )}
                 onClick={handleEndCall}
