@@ -45,7 +45,7 @@ const Index = () => {
                   {titles.map((title, index) => (
                     <motion.span
                       key={index}
-                      className="absolute w-full"
+                      className="absolute w-full text-white"
                       initial={{ opacity: 0, y: 50 }}
                       animate={{
                         y: titleNumber === index ? 0 : titleNumber > index ? -50 : 50,
@@ -72,7 +72,7 @@ const Index = () => {
                 duration: 0.8,
                 ease: "easeInOut",
               }}
-              className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-white max-w-2xl mx-auto"
             >
               Find friends and love based on unique character with{" "}
               <span className="relative inline-block">
@@ -108,13 +108,13 @@ const Index = () => {
                       alt={profile.name}
                       className="relative w-12 h-12 rounded-full border-2 border-white object-cover aspect-square"
                     />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 px-2 py-1 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 px-2 py-1 bg-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-primary">
                       {profile.name}
                     </div>
                   </div>
                 ))}
               </div>
-              <span className="text-muted-foreground text-left">
+              <span className="text-white text-left">
                 Join Marie, Luna & 1000+ others from Berlin already using the platform
               </span>
             </div>
