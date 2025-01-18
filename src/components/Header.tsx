@@ -26,8 +26,9 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-primary/5 supports-[backdrop-filter]:bg-primary/10 backdrop-blur-xl border-b border-primary/10">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <div className="absolute inset-0 bg-background/5 supports-[backdrop-filter]:bg-background/10 backdrop-blur-xl" />
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
         <div 
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => navigate("/")}
