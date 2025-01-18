@@ -2,6 +2,7 @@ import { useState } from "react";
 import { mockProfiles, Profile } from "@/data/mockProfiles";
 import { MatchCard } from "@/components/MatchCard";
 import { Header } from "@/components/Header";
+import { cn } from "@/lib/utils";
 
 const Swipe = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
