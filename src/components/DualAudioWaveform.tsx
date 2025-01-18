@@ -24,7 +24,7 @@ const AudioWaveform: React.FC<{ isActive: boolean; color: string }> = ({ isActiv
       {heights.map((height, index) => (
         <motion.div
           key={index}
-          className={`w-1 mx-px rounded-full`}
+          className={`w-2 mx-px rounded-full`}
           style={{ 
             backgroundColor: color,
             opacity: isActive ? 0.7 : 0.3 
@@ -52,14 +52,14 @@ const DualAudioWaveform: React.FC = () => {
         <Button
           variant="outline"
           size="icon"
-          className={`w-64 h-24 rounded-xl transition-all duration-300 overflow-hidden ${
+          className={`w-96 h-32 rounded-xl transition-all duration-300 overflow-hidden ${
             isUserSpeaking ? 'bg-blue-100 hover:bg-blue-200' : 'bg-gray-100 hover:bg-gray-200'
           }`}
           onClick={toggleUserSpeaking}
         >
           <AudioWaveform isActive={isUserSpeaking} color="#3B82F6" />
           <div className="absolute inset-0 flex items-center justify-center">
-            <Mic className={`w-6 h-6 ${isUserSpeaking ? 'text-blue-500' : 'text-gray-500'}`} />
+            <Mic className={`w-8 h-8 ${isUserSpeaking ? 'text-blue-500' : 'text-gray-500'}`} />
           </div>
         </Button>
       </div>
@@ -67,7 +67,7 @@ const DualAudioWaveform: React.FC = () => {
       {/* AI Response Waveform */}
       <div className="relative inline-block">
         <div
-          className="w-64 h-24 rounded-xl overflow-hidden bg-gray-100"
+          className="w-96 h-32 rounded-xl overflow-hidden bg-gray-100"
         >
           <AudioWaveform isActive={isAIResponding} color="#10B981" />
         </div>

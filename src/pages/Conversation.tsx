@@ -11,13 +11,23 @@ import DualAudioWaveform from "@/components/DualAudioWaveform";
 const Conversation = () => {
   const navigate = useNavigate();
   const [showEndCall, setShowEndCall] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Show end call button after 2s
+    const endCallTimer = setTimeout(() => {
       setShowEndCall(true);
     }, 2000);
 
-    return () => clearTimeout(timer);
+    // Set connected after 3s
+    const connectionTimer = setTimeout(() => {
+      setIsConnected(true);
+    }, 3000);
+
+    return () => {
+      clearTimeout(endCallTimer);
+      clearTimeout(connectionTimer);
+    };
   }, []);
 
   const handleEndCall = () => {
@@ -42,10 +52,10 @@ const Conversation = () => {
             transition={{ duration: 0.6 }}
             className="text-2xl font-semibold text-primary-foreground"
           >
-            Connecting...
+            {isConnected ? "Connected" : "Connecting..."}
           </motion.h2>
 
-          <DualAudioWaveform />
+          {isConnected && <DualAudioWaveform />}
 
           {showEndCall && (
             <motion.div
