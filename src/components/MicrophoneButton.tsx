@@ -19,12 +19,12 @@ export const MicrophoneButton = ({
       size="icon"
       className={cn(
         "w-16 h-16 rounded-full transition-all duration-300",
-        isRecording && "bg-red-500 hover:bg-red-600",
+        isRecording ? "bg-white hover:bg-gray-100" : "bg-red-500 hover:bg-red-600",
         className
       )}
       onClick={onClick}
     >
-      <Mic className={cn("h-8 w-8", isRecording && "text-white")} />
+      <Mic className={cn("h-8 w-8", isRecording ? "text-black" : "text-white")} />
     </Button>
   );
 };

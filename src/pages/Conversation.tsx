@@ -9,6 +9,7 @@ import { Phone, PhoneOff } from "lucide-react";
 const Conversation = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isCallActive, setIsCallActive] = useState(false);
+  const [micVolume, setMicVolume] = useState<number>(0);
   
   const { toast } = useToast();
   
@@ -17,6 +18,9 @@ const Conversation = () => {
   const localWavesurfer = useRef<WaveSurfer | null>(null);
   const remoteWavesurfer = useRef<WaveSurfer | null>(null);
   const apiConnection = useRef<any>(null);
+  const audioContext = useRef<AudioContext | null>(null);
+  const analyser = useRef<AnalyserNode | null>(null);
+  const mediaStream = useRef<MediaStream | null>(null);
 
   useEffect(() => {
     if (localWaveformRef.current && remoteWaveformRef.current) {
@@ -70,6 +74,12 @@ const Conversation = () => {
     return () => {
       localWavesurfer.current?.destroy();
       remoteWavesurfer.current?.destroy();
+      if (mediaStream.current) {
+        mediaStream.current.getTracks().forEach(track => track.stop());
+      }
+      if (audioContext.current) {
+        audioContext.current.close();
+      }
     };
   }, []);
 
@@ -111,6 +121,12 @@ const Conversation = () => {
     remoteWavesurfer.current?.stop();
     
     setIsCallActive(false);
+    setIsRecording(false);
+    
+    if (mediaStream.current) {
+      mediaStream.current.getTracks().forEach(track => track.stop());
+    }
+    
     toast({
       title: "Call ended",
       description: "Connection closed",
@@ -120,14 +136,35 @@ const Conversation = () => {
   const handleMicClick = async () => {
     try {
       if (!isRecording) {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Initialize audio context and analyzer
+        audioContext.current = new AudioContext();
+        analyser.current = audioContext.current.createAnalyser();
+        analyser.current.fftSize = 256;
+        
+        // Get microphone stream
+        mediaStream.current = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const source = audioContext.current.createMediaStreamSource(mediaStream.current);
+        source.connect(analyser.current);
+        
+        // Start volume monitoring
+        const dataArray = new Uint8Array(analyser.current.frequencyBinCount);
+        const updateVolume = () => {
+          if (analyser.current && isRecording) {
+            analyser.current.getByteFrequencyData(dataArray);
+            const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+            setMicVolume(Math.round(average));
+            requestAnimationFrame(updateVolume);
+          }
+        };
+        
         setIsRecording(true);
-        // Mock recording for demo
-        setTimeout(() => {
-          setIsRecording(false);
-        }, 3000);
+        updateVolume();
       } else {
         setIsRecording(false);
+        if (mediaStream.current) {
+          mediaStream.current.getTracks().forEach(track => track.stop());
+        }
+        setMicVolume(0);
       }
     } catch (error) {
       toast({
@@ -149,6 +186,11 @@ const Conversation = () => {
         {/* Local audio waveform (User) */}
         <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm w-full">
           <div ref={localWaveformRef} className="w-full h-[200px]" />
+        </div>
+        
+        {/* Volume debug display */}
+        <div className="text-center text-white/70 text-sm">
+          Microphone Volume: {micVolume}
         </div>
       </div>
 
