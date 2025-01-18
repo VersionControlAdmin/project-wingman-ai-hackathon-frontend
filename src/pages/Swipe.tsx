@@ -16,6 +16,7 @@ const Swipe = () => {
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [shouldBuzz, setShouldBuzz] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [isCardMoving, setIsCardMoving] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -37,6 +38,7 @@ const Swipe = () => {
   }, [currentIndex, profiles.length]);
 
   const handleSwipe = (liked: boolean) => {
+    setIsCardMoving(true);
     setDirection(liked ? "right" : "left");
     setTimeout(() => {
       if (liked) {
@@ -44,6 +46,7 @@ const Swipe = () => {
       }
       setCurrentIndex((prev) => prev + 1);
       setDirection(null);
+      setIsCardMoving(false);
     }, 300);
   };
 
@@ -134,21 +137,28 @@ const Swipe = () => {
                 transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05})`,
                 zIndex: -idx,
                 opacity: 0.5 - idx * 0.1,
+                transition: 'all 0.3s ease-out',
               }}
             >
               <MatchCard profile={profile} isActive={false} />
             </div>
           ))}
 
-          <div 
+          <motion.div 
             className={cn(
-              "relative z-10 transition-all duration-300 w-full",
+              "relative z-10 w-full",
               direction === "left" && "translate-x-[-100%] opacity-0 rotate-[-10deg]",
               direction === "right" && "translate-x-[100%] opacity-0 rotate-[10deg]"
             )}
+            style={{
+              transition: 'all 0.3s ease-out',
+            }}
           >
-            <MatchCard profile={profiles[currentIndex]} />
-          </div>
+            <MatchCard 
+              profile={profiles[currentIndex]} 
+              isActive={!isCardMoving}
+            />
+          </motion.div>
 
           <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50 bg-primary/80 py-4 md:py-0 md:bg-transparent">
             <Button
