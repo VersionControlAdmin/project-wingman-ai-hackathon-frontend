@@ -19,7 +19,7 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen flex flex-col">
           <Header />
-          <div className="flex-1 pt-16"> {/* Add padding-top to account for fixed header */}
+          <div className="flex-1"> {/* Add padding-top to account for fixed header */}
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/conversation" element={<Conversation />} />

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PhoneOff } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Header } from "@/components/Header";
 import { Meteors } from "@/components/ui/meteors";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -21,7 +20,7 @@ const Conversation = () => {
   }, []);
 
   const handleEndCall = () => {
-    navigate('/swipe', { state: { fromPage: 'conversation' } });
+    navigate("/swipe", { state: { fromPage: "conversation" } });
     toast("Call has ended", {
       description: "You can now continue swiping",
       duration: 2000,
@@ -30,14 +29,13 @@ const Conversation = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
-      <Header />
       <div className="flex-1 flex items-center justify-center p-4 relative">
         <div className="absolute inset-0">
           <Meteors number={20} />
         </div>
 
         <div className="text-center space-y-8 relative z-10">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -50,10 +48,10 @@ const Conversation = () => {
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
+              transition={{
                 type: "spring",
                 stiffness: 260,
-                damping: 20 
+                damping: 20,
               }}
             >
               <Button

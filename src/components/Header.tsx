@@ -29,12 +29,15 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="absolute inset-0 bg-background/5 supports-[backdrop-filter]:bg-background/10 backdrop-blur-xl" />
       <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
-        <div 
+        <div
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity text-white"
           onClick={() => navigate("/")}
         >
-          <img src="/placeholder.svg" alt="Logo" className="h-8 w-8" />
-          <span className="font-semibold">Project Wingly</span>
+          <img
+            src="/Boardy for Dating (1).png"
+            alt="Logo"
+            className="h-full max-h-[72px] w-auto object-contain"
+          />
         </div>
 
         {/* Mobile Menu Button */}
@@ -76,7 +79,7 @@ export const Header = () => {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          
+
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-white">
