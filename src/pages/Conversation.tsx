@@ -1,21 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import WaveSurfer from "wavesurfer.js";
 import axios from "axios";
 import { MicrophoneButton } from "@/components/MicrophoneButton";
 import { Button } from "@/components/ui/button";
-import { ChatBubble } from "@/components/ChatBubble";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, PhoneOff } from "lucide-react";
 
 const Conversation = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isCallActive, setIsCallActive] = useState(false);
-  const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([
-    { text: "Hi! I'm Jason, your personal wingman. Ready to find your perfect match?", isUser: false },
-  ]);
   
-  const navigate = useNavigate();
   const { toast } = useToast();
   
   const localWaveformRef = useRef<HTMLDivElement>(null);
@@ -29,25 +23,27 @@ const Conversation = () => {
       // Initialize local waveform
       localWavesurfer.current = WaveSurfer.create({
         container: localWaveformRef.current,
-        waveColor: '#9b87f5',
-        progressColor: '#1A1F2C',
-        height: 50,
+        waveColor: '#fb4d3d', // accent color
+        progressColor: '#191923', // primary color
+        height: 200, // Increased height
         cursorWidth: 0,
-        barWidth: 2,
-        barGap: 3,
+        barWidth: 3,
+        barGap: 4,
         barRadius: 3,
+        responsive: true,
       });
 
       // Initialize remote waveform
       remoteWavesurfer.current = WaveSurfer.create({
         container: remoteWaveformRef.current,
-        waveColor: '#D6BCFA',
-        progressColor: '#403E43',
-        height: 50,
+        waveColor: '#c5d1eb', // secondary color
+        progressColor: '#191923', // primary color
+        height: 200, // Increased height
         cursorWidth: 0,
-        barWidth: 2,
-        barGap: 3,
+        barWidth: 3,
+        barGap: 4,
         barRadius: 3,
+        responsive: true,
       });
 
       // Load demo audio data
@@ -113,16 +109,6 @@ const Conversation = () => {
         // Mock recording for demo
         setTimeout(() => {
           setIsRecording(false);
-          setMessages((prev) => [
-            ...prev,
-            { text: "I'm looking for someone who shares my interests in tech and hiking.", isUser: true },
-            { text: "Great! I'll help you find someone perfect. Let's move on to some potential matches!", isUser: false },
-          ]);
-          toast({
-            title: "Conversation complete!",
-            description: "Let's check out your matches.",
-          });
-          setTimeout(() => navigate("/swipe"), 2000);
         }, 3000);
       } else {
         setIsRecording(false);
@@ -138,30 +124,19 @@ const Conversation = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between p-4 bg-zinc-900">
-      <div className="w-full max-w-md flex-1 overflow-y-auto space-y-4 mb-4">
-        {messages.map((msg, index) => (
-          <ChatBubble
-            key={index}
-            message={msg.text}
-            isUser={msg.isUser}
-            className="animate-fade-in"
-          />
-        ))}
-      </div>
-      
-      <div className="w-full max-w-2xl space-y-8 mb-8">
-        {/* Local audio waveform */}
-        <div className="p-4 rounded-lg bg-zinc-800/50 backdrop-blur-sm">
-          <div ref={localWaveformRef} className="w-full" />
+      <div className="w-full max-w-4xl flex-1 flex flex-col justify-center gap-16 px-4">
+        {/* Remote audio waveform (AI) */}
+        <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm">
+          <div ref={remoteWaveformRef} className="w-full" />
         </div>
         
-        {/* Remote audio waveform */}
-        <div className="p-4 rounded-lg bg-zinc-800/50 backdrop-blur-sm">
-          <div ref={remoteWaveformRef} className="w-full" />
+        {/* Local audio waveform (User) */}
+        <div className="p-6 rounded-xl bg-zinc-800/50 backdrop-blur-sm">
+          <div ref={localWaveformRef} className="w-full" />
         </div>
       </div>
 
-      <div className="w-full max-w-md flex justify-center gap-4 pb-4">
+      <div className="w-full max-w-md flex justify-center gap-4 pb-4 pt-8">
         <MicrophoneButton
           isRecording={isRecording}
           onClick={handleMicClick}
