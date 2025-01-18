@@ -76,9 +76,9 @@ const Index = () => {
             >
               Find friends and love based on unique character with{" "}
               <span className="relative inline-block">
-                <span className="absolute inset-0 bg-gradient-to-r from-violet-600 to-pink-600 blur-sm animate-pulse" />
+                <span className="absolute inset-0 bg-gradient-to-r from-[#E5DEFF] to-[#FDE1D3] blur-sm animate-pulse" />
                 <Sparkles>
-                  <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-pink-600 animate-shine">
+                  <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-[#E5DEFF] to-[#FDE1D3] animate-shine">
                     Wingly
                   </span>
                 </Sparkles>
