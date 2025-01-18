@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { mockProfiles, Profile } from "@/data/mockProfiles";
 import { MatchCard } from "@/components/MatchCard";
-import { Button } from "@/components/ui/button";
-import { Heart, X } from "lucide-react";
 import { Header } from "@/components/Header";
 
 const Swipe = () => {
@@ -39,51 +37,27 @@ const Swipe = () => {
       <Header />
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="relative w-full max-w-4xl">
-          {/* Previous profiles (blurred) */}
-          {currentIndex > 0 && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 -translate-x-full">
-              <MatchCard
-                profile={profiles[currentIndex - 1]}
-                isActive={false}
-              />
-            </div>
-          )}
-
-          {/* Current profile */}
-          <MatchCard
-            profile={profiles[currentIndex]}
-            onSwipeLeft={() => handleSwipe(false)}
-            onSwipeRight={() => handleSwipe(true)}
-          />
-
-          {/* Next profiles (blurred) */}
-          {currentIndex < profiles.length - 1 && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 translate-x-full">
-              <MatchCard
-                profile={profiles[currentIndex + 1]}
-                isActive={false}
-              />
-            </div>
-          )}
-
-          {/* Control buttons */}
-          <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 flex justify-center space-x-4">
-            <Button
-              variant="outline"
-              size="icon"
-              className="w-16 h-16 rounded-full border-2 border-destructive hover:bg-destructive/10"
-              onClick={() => handleSwipe(false)}
+          {/* Stack of future cards */}
+          {profiles.slice(currentIndex + 1, currentIndex + 3).map((profile, idx) => (
+            <div
+              key={profile.id}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{
+                transform: `translate(-50%, -50%) scale(${1 - (idx + 1) * 0.05}) translateY(${(idx + 1) * 10}px)`,
+                zIndex: -idx,
+              }}
             >
-              <X className="h-8 w-8 text-destructive" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="w-16 h-16 rounded-full border-2 border-success hover:bg-success/10"
-              onClick={() => handleSwipe(true)}
-            >
-              <Heart className="h-8 w-8 text-success" />
-            </Button>
+              <MatchCard profile={profile} isActive={false} />
+            </div>
+          ))}
+
+          {/* Current card */}
+          <div className="relative z-10">
+            <MatchCard
+              profile={profiles[currentIndex]}
+              onSwipeLeft={() => handleSwipe(false)}
+              onSwipeRight={() => handleSwipe(true)}
+            />
           </div>
         </div>
       </div>
