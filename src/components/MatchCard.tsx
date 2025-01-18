@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Profile } from "@/data/mockProfiles";
 import { ChatBubble } from "./ChatBubble";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface MatchCardProps {
   profile: Profile;
