@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { Profile } from "@/data/mockProfiles";
-import { ChatBubble } from "./ChatBubble";
+import { useState, useEffect } from "react";
+import { MatchProfile } from "@/types/match";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Send, X } from "lucide-react";
+import { ProfileHeader } from "./ProfileHeader";
+import { ChatSection } from "./ChatSection";
 
 interface MatchCardProps {
-  profile: Profile;
+  profile: MatchProfile;
   isActive?: boolean;
 }
 
@@ -21,17 +21,6 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
   const [showProfilePicture, setShowProfilePicture] = useState(false);
   const [profilePictureBuzz, setProfilePictureBuzz] = useState(false);
   const [showAIRecommendation, setShowAIRecommendation] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    if (visibleMessages > 0) {
-      scrollToBottom();
-    }
-  }, [visibleMessages, userMessages]);
 
   useEffect(() => {
     setVisibleMessages(0);
@@ -70,7 +59,6 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
     if (newMessage.trim()) {
       setUserMessages(prev => [...prev, { text: newMessage, sender: "user" }]);
       setNewMessage("");
-      scrollToBottom();
     }
   };
 
@@ -82,81 +70,28 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
         "animate-fade-in"
       )}
     >
-      <div className="flex items-center space-x-4 mb-4">
-        <div className="relative group">
-          <div className="absolute inset-0 rounded-full bg-[#555555] opacity-0 group-hover:opacity-50 transition-opacity duration-300 blur-md" />
-          <img
-            src={profile.avatar}
-            alt={profile.name}
-            className={cn(
-              "w-16 h-16 rounded-full object-cover cursor-pointer transition-all duration-300 relative z-10",
-              !showProfilePicture && "blur-md",
-              profilePictureBuzz && "animate-buzz",
-            )}
-            onClick={() => setImageOpen(true)}
-          />
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold text-primary">
-            {profile.name}, {profile.age} • {profile.city}
-          </h3>
-          <p className="text-sm text-muted">{profile.bio}</p>
-        </div>
-      </div>
+      <ProfileHeader
+        profile={profile}
+        showProfilePicture={showProfilePicture}
+        profilePictureBuzz={profilePictureBuzz}
+        onImageClick={() => setImageOpen(true)}
+      />
 
       <div className="text-xs text-primary mb-2 flex justify-between font-medium">
         <span>{profile.name}'s Wingman</span>
         <span>Anna's Wingman</span>
       </div>
 
-      <div className="flex flex-col h-auto">
-        <div className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent min-h-[150px] max-h-[250px] md:max-h-[300px]">
-          {profile.conversation.slice(0, visibleMessages).map((msg, index) => (
-            <ChatBubble
-              key={index}
-              message={msg.text}
-              isUser={msg.sender === "user"}
-              className="animate-fade-in"
-            />
-          ))}
-          {userMessages.map((msg, index) => (
-            <ChatBubble
-              key={`user-${index}`}
-              message={msg.text}
-              isUser={true}
-              className="animate-fade-in"
-            />
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {visibleMessages === profile.conversation.length && showAIRecommendation && (
-          <div className="mt-3 p-3 rounded-lg bg-secondary/10 animate-fade-in">
-            <h4 className="font-semibold mb-2">Your Wingman's Recommendation</h4>
-            <div className={cn(
-              "text-sm p-2 rounded",
-              profile.aiRecommendation.isMatch ? "bg-success/20" : "bg-destructive/20"
-            )}>
-              {profile.aiRecommendation.reason}
-            </div>
-          </div>
-        )}
-
-        {visibleMessages === profile.conversation.length && showAIRecommendation && (
-          <div className="flex items-center gap-2 mt-3 animate-fade-in">
-            <Input
-              placeholder="Ask their Wingman a question..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              className="placeholder:text-gray-500"
-            />
-            <Button size="icon" onClick={handleSendMessage}>
-              <Send className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
-      </div>
+      <ChatSection
+        messages={profile.conversation}
+        visibleMessages={visibleMessages}
+        userMessages={userMessages}
+        showAIRecommendation={showAIRecommendation}
+        aiRecommendation={profile.aiRecommendation}
+        newMessage={newMessage}
+        onNewMessageChange={(value) => setNewMessage(value)}
+        onSendMessage={handleSendMessage}
+      />
 
       <Dialog open={imageOpen} onOpenChange={setImageOpen}>
         <DialogContent className="max-w-[90vw] max-h-[90vh] w-auto">
