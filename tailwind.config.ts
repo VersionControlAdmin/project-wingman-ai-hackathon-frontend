@@ -125,6 +125,10 @@ export default {
             opacity: "0",
           },
         },
+        shine: {
+          "0%": { backgroundPosition: "200% 50%" },
+          "100%": { backgroundPosition: "-200% 50%" },
+        },
       },
       animation: {
         aurora: "aurora 60s linear infinite",
@@ -137,6 +141,10 @@ export default {
         "slide-left": "slide-left 0.3s ease-out",
         "slide-right": "slide-right 0.3s ease-out",
         "meteor-effect": "meteor 5s linear infinite",
+        shine: "shine 8s linear infinite",
+      },
+      backgroundSize: {
+        "200%": "200% 100%",
       },
     },
   },
