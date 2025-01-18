@@ -1,69 +1,103 @@
-# Welcome to your Lovable project
+# Wingly - AI-Powered Dating & Friendship Platform
 
-## Project info
+## Overview
 
-**URL**: https://lovable.dev/projects/ea39e71f-5dbf-4cc2-98ab-1ab45a3bd8dc
+Wingly is an innovative AI-powered platform designed to help users find meaningful connections through personality-based matching. The application combines modern UI elements with intelligent conversation features to create an engaging and personalized experience.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **AI-Powered Conversations**: Engage with an AI assistant that helps guide users through the matching process
+- **Personality-Based Matching**: Find connections based on character traits and shared interests
+- **Modern UI Components**: 
+  - Interactive magnetize buttons
+  - Animated backgrounds with aurora effects
+  - Dynamic sparkle animations
+  - Smooth transitions and motion effects
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ea39e71f-5dbf-4cc2-98ab-1ab45a3bd8dc) and start prompting.
+This project is built with modern web technologies:
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js & npm - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
+### Development Setup
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Development Options
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 1. Using Lovable
 
-**Use GitHub Codespaces**
+Visit the [Lovable Project](https://lovable.dev/projects/ea39e71f-5dbf-4cc2-98ab-1ab45a3bd8dc) to start making changes through the AI interface. Changes are automatically committed to the repository.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 2. Local Development
 
-## What technologies are used for this project?
+Work locally using your preferred IDE:
+- Clone the repository
+- Install dependencies
+- Run the development server
+- Push changes to update the Lovable preview
 
-This project is built with .
+### 3. GitHub Integration
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Edit files directly in GitHub
+- Use GitHub Codespaces for cloud development
+- All changes sync with Lovable
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/ea39e71f-5dbf-4cc2-98ab-1ab45a3bd8dc) and click on Share -> Publish.
+### Quick Deploy
 
-## I want to use a custom domain - is that possible?
+1. Open [Lovable](https://lovable.dev/projects/ea39e71f-5dbf-4cc2-98ab-1ab45a3bd8dc)
+2. Navigate to Share -> Publish
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+### Custom Domain Deployment
+
+While custom domains aren't directly supported in Lovable yet, you can deploy to Netlify:
+- Visit our [Custom domains documentation](https://docs.lovable.dev/tips-tricks/custom-domain/) for detailed instructions
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/         # Main application pages
+├── hooks/         # Custom React hooks
+├── lib/          # Utility functions
+└── types/        # TypeScript definitions
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## License
+
+This project is private and proprietary. All rights reserved.
