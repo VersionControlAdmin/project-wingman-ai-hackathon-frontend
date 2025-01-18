@@ -66,6 +66,13 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               Find friends and love based on your unique character
             </p>
+
+            <div className="relative w-fit mx-auto">
+              <span className="text-[#9b87f5] text-2xl font-semibold">
+                Project Wingman
+              </span>
+              <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-[#D6BCFA] via-[#9b87f5] to-[#D6BCFA] opacity-80"></div>
+            </div>
             
             <div className="flex justify-center pt-8">
               <MagnetizeButton
