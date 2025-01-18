@@ -70,12 +70,12 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full px-4 md:px-0">
       <Button
         variant="ghost"
         size="icon"
         className={cn(
-          "absolute left-4 top-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
+          "absolute left-8 bottom-4 md:left-4 md:top-1/2 md:-translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
           "border-destructive/30 hover:border-destructive hover:bg-destructive/20"
         )}
         onClick={() => onSwipeLeft?.()}
@@ -87,7 +87,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
         variant="ghost"
         size="icon"
         className={cn(
-          "absolute right-4 top-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
+          "absolute right-8 bottom-4 md:right-4 md:top-1/2 md:-translate-y-1/2 z-10 w-16 h-16 rounded-full border-2 transition-all duration-300",
           "border-success/30 hover:border-success hover:bg-success/20"
         )}
         onClick={() => onSwipeRight?.()}
@@ -97,7 +97,7 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
 
       <Card 
         className={cn(
-          "w-full max-w-md mx-auto p-4 space-y-4 transition-all duration-300 bg-white/90 backdrop-blur-sm",
+          "w-full max-w-md mx-auto p-4 space-y-4 transition-all duration-300 bg-white/90 backdrop-blur-sm mb-24 md:mb-0",
           !isActive && "opacity-50 blur-sm pointer-events-none scale-95 -translate-y-4",
           "animate-fade-in"
         )}
