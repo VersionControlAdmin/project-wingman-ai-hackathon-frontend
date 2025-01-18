@@ -34,7 +34,7 @@ const Index = () => {
       <main className="flex-1 relative">
         <AuroraBackground className="absolute inset-0" />
         
-        <div className="container mx-auto px-4 py-20 md:py-32 relative">
+        <div className="container mx-auto px-4 py-12 md:py-20 relative">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 transform scale-[0.80] rounded-full blur-3xl" />
