@@ -129,9 +129,9 @@ const Swipe = () => {
           {profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
             <div
               key={profile.id}
-              className="absolute left-1/2 top-[40%]"
+              className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
               style={{
-                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05}) translate(${idx * 20}px, ${idx * 20}px)`,
+                transform: `translate(-50%, -50%) scale(${0.95 - idx * 0.05})`,
                 zIndex: -idx,
                 opacity: 0.5 - idx * 0.1,
               }}
