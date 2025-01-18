@@ -1,74 +1,60 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { PhoneOff } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Header } from "@/components/Header";
+import { MicrophoneButton } from "@/components/MicrophoneButton";
 import { Meteors } from "@/components/ui/meteors";
-import { toast } from "sonner";
-import { motion } from "framer-motion";
 
 const Conversation = () => {
-  const navigate = useNavigate();
-  const [showEndCall, setShowEndCall] = useState(false);
+  const location = useLocation();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowEndCall(true);
-    }, 2000);
+    // Fetch messages based on conversation ID from location
+    const fetchMessages = async () => {
+      // Simulate fetching messages
+      const fetchedMessages = [
+        { id: 1, text: "Hello!", sender: "user" },
+        { id: 2, text: "Hi there!", sender: "friend" },
+      ];
+      setMessages(fetchedMessages);
+    };
 
-    return () => clearTimeout(timer);
-  }, []);
+    fetchMessages();
+  }, [location]);
 
-  const handleEndCall = () => {
-    navigate('/swipe', { state: { fromPage: 'conversation' } });
-    toast("Call has ended", {
-      description: "You can now continue swiping",
-      duration: 2000,
-    });
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      setMessages((prev) => [...prev, { id: Date.now(), text: newMessage, sender: "user" }]);
+      setNewMessage("");
+    }
   };
 
   return (
-    <div className="h-screen flex flex-col bg-primary">
-      <Header />
-      <div className="flex-1 flex items-center justify-center relative">
+    <div className="h-screen flex flex-col overflow-hidden bg-primary">
+      <div className="flex-1 relative">
         <div className="absolute inset-0">
-          <Meteors number={20} />
+          <Meteors />
         </div>
-
-        <div className="text-center space-y-8 relative z-10">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl font-semibold text-white"
-          >
-            Connecting...
-          </motion.h2>
-
-          {showEndCall && (
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 260,
-                damping: 20 
-              }}
-            >
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "w-14 h-14 rounded-full",
-                  "bg-destructive hover:bg-destructive/80"
-                )}
-                onClick={handleEndCall}
-              >
-                <PhoneOff className="h-6 w-6 text-white" />
-              </Button>
-            </motion.div>
-          )}
+        <div className="relative z-10 h-full flex flex-col">
+          <div className="flex-1 overflow-y-auto p-4">
+            {messages.map((message) => (
+              <div key={message.id} className={`message ${message.sender}`}>
+                {message.text}
+              </div>
+            ))}
+          </div>
+          <div className="flex p-4">
+            <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className="flex-1 border rounded p-2"
+              placeholder="Type a message..."
+            />
+            <Button onClick={handleSendMessage} className="ml-2">Send</Button>
+            <MicrophoneButton />
+          </div>
         </div>
       </div>
     </div>

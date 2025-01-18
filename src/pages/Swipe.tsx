@@ -80,11 +80,10 @@ const Swipe = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-primary">
-      <Header />
-      <div className="flex-1 flex items-center justify-center relative">
+    <div className="h-screen flex flex-col overflow-hidden bg-primary">
+      <div className="flex-1 relative">
         <div className="absolute inset-0">
-          <Meteors number={20} />
+          <Meteors />
         </div>
         
         <AnimatePresence>
@@ -130,8 +129,8 @@ const Swipe = () => {
           <PhoneCall className="h-6 w-6 text-white" />
         </Button>
         
-        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative">
-          <AnimatePresence mode="wait">
+        <div className="flex flex-col items-center w-full max-w-md mx-auto mt-20 mb-24 md:mt-0 md:mb-8 gap-8 relative h-full overflow-y-auto">
+          <AnimatePresence mode="popLayout">
             {showCards && profiles.slice(currentIndex + 1, currentIndex + 4).map((profile, idx) => (
               <motion.div
                 key={profile.id}
