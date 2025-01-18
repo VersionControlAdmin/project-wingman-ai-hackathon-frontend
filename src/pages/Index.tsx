@@ -72,7 +72,7 @@ const Index = () => {
                 duration: 0.8,
                 ease: "easeInOut",
               }}
-              className="text-xl md:text-2xl text-white max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto"
             >
               Find friends and love based on unique character with{" "}
               <span className="relative inline-block">
@@ -114,7 +114,7 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <span className="text-white text-left">
+              <span className="text-white/90 text-left">
                 Join Marie, Luna & 1000+ others from Berlin already using the platform
               </span>
             </div>
