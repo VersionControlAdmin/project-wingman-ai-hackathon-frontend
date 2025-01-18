@@ -3,6 +3,7 @@ import { mockProfiles, Profile } from "@/data/mockProfiles";
 import { MatchCard } from "@/components/MatchCard";
 import { Header } from "@/components/Header";
 import { cn } from "@/lib/utils";
+import { Meteors } from "@/components/ui/meteors";
 
 const Swipe = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,7 +23,7 @@ const Swipe = () => {
 
   if (currentIndex >= profiles.length) {
     return (
-      <div className="min-h-screen flex flex-col bg-primary">
+      <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
         <Header />
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center space-y-4 animate-fade-in">
@@ -34,12 +35,13 @@ const Swipe = () => {
             </p>
           </div>
         </div>
+        <Meteors />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary">
+    <div className="min-h-screen flex flex-col bg-primary overflow-hidden">
       <Header />
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="relative w-full max-w-4xl">
@@ -74,6 +76,7 @@ const Swipe = () => {
           </div>
         </div>
       </div>
+      <Meteors />
     </div>
   );
 };

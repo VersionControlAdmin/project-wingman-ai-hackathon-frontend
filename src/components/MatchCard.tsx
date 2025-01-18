@@ -20,12 +20,16 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
   const [newMessage, setNewMessage] = useState("");
   const [imageOpen, setImageOpen] = useState(false);
   const [userMessages, setUserMessages] = useState<Array<{text: string, sender: "user"}>>([]);
+  const [showProfilePicture, setShowProfilePicture] = useState(false);
+  const [profilePictureBuzz, setProfilePictureBuzz] = useState(false);
 
   // Reset animation and messages when card changes or becomes active
   useEffect(() => {
     setVisibleMessages(0);
     setNewMessage("");
     setUserMessages([]);
+    setShowProfilePicture(false);
+    setProfilePictureBuzz(false);
     
     if (isActive) {
       const timer = setInterval(() => {
@@ -34,13 +38,18 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
             return prev + 1;
           }
           clearInterval(timer);
+          // Start profile picture reveal timer after conversation ends
+          setTimeout(() => {
+            setShowProfilePicture(true);
+            setTimeout(() => setProfilePictureBuzz(true), 500);
+          }, 5000);
           return prev;
         });
       }, 2000);
 
       return () => clearInterval(timer);
     }
-  }, [profile.id, isActive]); // Add profile.id to dependencies to reset on card change
+  }, [profile.id, isActive]);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -87,8 +96,9 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
             src={profile.avatar}
             alt={profile.name}
             className={cn(
-              "w-16 h-16 rounded-full object-cover cursor-pointer",
-              visibleMessages === profile.conversation.length && "animate-buzz"
+              "w-16 h-16 rounded-full object-cover cursor-pointer transition-all duration-300",
+              !showProfilePicture && "blur-md",
+              profilePictureBuzz && "animate-buzz",
             )}
             onClick={() => setImageOpen(true)}
           />
@@ -101,8 +111,8 @@ export const MatchCard = ({ profile, isActive = true, onSwipeLeft, onSwipeRight 
         </div>
 
         <div className="text-xs text-primary mb-2 flex justify-between font-medium">
+          <span>{profile.name}'s Wingman</span>
           <span>Anna's Wingman</span>
-          <span>Candidate's Wingman</span>
         </div>
 
         <div className="space-y-2">
