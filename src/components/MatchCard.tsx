@@ -142,7 +142,7 @@ export const MatchCard = ({ profile, isActive = true }: MatchCardProps) => {
           </div>
         )}
 
-        {visibleMessages === profile.conversation.length && (
+        {visibleMessages === profile.conversation.length && showAIRecommendation && (
           <div className="flex items-center gap-2 mt-3 animate-fade-in">
             <Input
               placeholder="Ask their Wingman a question..."
