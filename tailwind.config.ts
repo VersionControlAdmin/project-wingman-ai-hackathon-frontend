@@ -142,6 +142,7 @@ export default {
         "slide-right": "slide-right 0.3s ease-out",
         "meteor-effect": "meteor 5s linear infinite",
         shine: "shine 8s linear infinite",
+        "shine-subtle": "shine 12s linear infinite", // Slower animation
       },
       backgroundSize: {
         "200%": "200% 100%",
