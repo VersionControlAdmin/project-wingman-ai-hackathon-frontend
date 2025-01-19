@@ -28,7 +28,14 @@ const Swipe = () => {
       setShowCards(true);
     }, 4000);
 
-    return () => clearTimeout(welcomeTimer);
+    const buzzTimer = setTimeout(() => {
+      setShouldBuzz(true);
+    }, 15000);
+
+    return () => {
+      clearTimeout(welcomeTimer);
+      clearTimeout(buzzTimer);
+    };
   }, [location]);
 
   useEffect(() => {
@@ -187,29 +194,33 @@ const Swipe = () => {
           </AnimatePresence>
 
           <div className="flex justify-center gap-8 w-full px-4 fixed bottom-8 left-0 right-0 md:relative md:bottom-0 z-50 bg-primary/80 py-4 md:py-0 md:bg-transparent">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "w-14 h-14 rounded-full border-2 transition-all duration-300",
-                "border-destructive/30 hover:border-destructive hover:bg-destructive/20"
-              )}
-              onClick={() => handleSwipe(false)}
-            >
-              <X className="h-6 w-6 text-destructive hover:text-destructive-foreground" />
-            </Button>
+            {!showWelcome && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "w-14 h-14 rounded-full border-2 transition-all duration-300",
+                    "border-destructive/30 hover:border-destructive hover:bg-destructive/20"
+                  )}
+                  onClick={() => handleSwipe(false)}
+                >
+                  <X className="h-6 w-6 text-destructive hover:text-destructive-foreground" />
+                </Button>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "w-14 h-14 rounded-full border-2 transition-all duration-300",
-                "border-success/30 hover:border-success hover:bg-success/20"
-              )}
-              onClick={() => handleSwipe(true)}
-            >
-              <Heart className="h-6 w-6 text-success hover:text-success-foreground" />
-            </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "w-14 h-14 rounded-full border-2 transition-all duration-300",
+                    "border-success/30 hover:border-success hover:bg-success/20"
+                  )}
+                  onClick={() => handleSwipe(true)}
+                >
+                  <Heart className="h-6 w-6 text-success hover:text-success-foreground" />
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>

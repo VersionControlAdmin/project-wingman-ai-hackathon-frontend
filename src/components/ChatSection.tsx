@@ -7,25 +7,32 @@ import { Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ChatSectionProps {
-  messages: Message[];
+  messages: Array<any>;
   visibleMessages: number;
   userMessages: Array<{ text: string; sender: "user" }>;
+  aiResponses: Array<{ text: string; sender: "ai" }>;
   showAIRecommendation: boolean;
-  aiRecommendation: { isMatch: boolean; reason: string };
+  aiRecommendation: {
+    reason: string;
+    isMatch: boolean;
+  };
   newMessage: string;
   onNewMessageChange: (value: string) => void;
   onSendMessage: () => void;
+  isLoading: boolean;
 }
 
 export const ChatSection = ({
   messages,
   visibleMessages,
   userMessages,
+  aiResponses,
   showAIRecommendation,
   aiRecommendation,
   newMessage,
   onNewMessageChange,
   onSendMessage,
+  isLoading,
 }: ChatSectionProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -35,29 +42,41 @@ export const ChatSection = ({
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, userMessages, visibleMessages]);
+  }, [messages, userMessages, aiResponses, visibleMessages, isLoading]);
 
   return (
-    <div className="flex flex-col h-auto">
-      <div className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent min-h-[150px] max-h-[250px] md:max-h-[300px]">
-        {messages.slice(0, visibleMessages).map((msg, index) => (
+    <div className="space-y-4 h-[400px] overflow-y-auto pr-2">
+      {messages.slice(0, visibleMessages).map((message, index) => (
+        <ChatBubble
+          key={index}
+          message={message.text}
+          isUser={message.sender === "user"}
+          className="animate-fade-in"
+        />
+      ))}
+
+      {userMessages.map((message, index) => (
+        <div key={`message-group-${index}`}>
           <ChatBubble
-            key={index}
-            message={msg.text}
-            isUser={msg.sender === "user"}
-            className="animate-fade-in"
-          />
-        ))}
-        {userMessages.map((msg, index) => (
-          <ChatBubble
-            key={`user-${index}`}
-            message={msg.text}
+            message={message.text}
             isUser={true}
             className="animate-fade-in"
           />
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+          {aiResponses[index] && (
+            <ChatBubble
+              message={aiResponses[index].text}
+              isUser={false}
+              className="animate-fade-in"
+            />
+          )}
+        </div>
+      ))}
+
+      {isLoading && (
+        <div className="chat-message ai">
+          <span className="animate-pulse">Typing...</span>
+        </div>
+      )}
 
       {visibleMessages === messages.length && showAIRecommendation && (
         <div className="mt-3 p-3 rounded-lg bg-secondary/10 animate-fade-in">
@@ -87,6 +106,8 @@ export const ChatSection = ({
           </Button>
         </div>
       )}
+
+      <div ref={messagesEndRef} />
     </div>
   );
 };

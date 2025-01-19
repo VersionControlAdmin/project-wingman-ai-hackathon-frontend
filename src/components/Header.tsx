@@ -84,7 +84,7 @@ export const Header = () => {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-white">
                 <User className="h-4 w-4" />
-                <span className="text-sm">My Profile: Anna</span>
+                <span className="text-sm">My Profile: Sebastian</span>
               </div>
               <Button
                 variant="ghost"
@@ -129,7 +129,7 @@ export const Header = () => {
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 p-3 text-black">
                         <User className="h-4 w-4" />
-                        <span className="text-sm">My Profile: Anna</span>
+                        <span className="text-sm">My Profile: Sebastian</span>
                       </div>
                       <Button
                         variant="ghost"
